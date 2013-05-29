@@ -166,13 +166,21 @@ function hex2rgb( $color ) {
  * 
  * @since WPMedium 1.0
  * 
+ * @param int $post_it Post ID (optional)
+ * @param string $size Default attachment size (optional)
  * @return string Post's thumbnail HTML code.
  */
-function wpmedium_get_post_thumbnail() {
-    global $post, $wpmedium;
+function wpmedium_get_post_thumbnail( $post_id = 0, $size = 'post-thumbnail' ) {
+    global $wpmedium;
     
-    if ( has_post_thumbnail( $post->ID ) ) {
-        $attachment =  wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );
+    if ( !$post_id ) {
+        global $post;
+        $post_id = $post->ID;
+    }
+    
+    if ( has_post_thumbnail( $post_id ) ) {
+        
+        $attachment = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size );
         
         if ( $attachment[1] > $attachment[2] ) {
             if ( $attachment[1] / ( $attachment[2] / 245 ) < 370 )
@@ -185,10 +193,10 @@ function wpmedium_get_post_thumbnail() {
         else
             $class = "default";
         
-        $ret = '<img src="'.$attachment[0].'" alt="'.get_the_title( $post->ID ).'" class="attachment-post-thumbnail wp-post-image '.$class.'" />';
+        $ret = '<img src="'.$attachment[0].'" alt="'.get_the_title( $post_id ).'" class="attachment-post-thumbnail wp-post-image '.$class.'" />';
     }
     else if ( $wpmedium['general']['toggle_default_post_thumbnail'] == '1' && $wpmedium['general']['default_post_thumbnail'] != '' ) {
-        $ret = '<img src="'.esc_url( $wpmedium['general']['default_post_thumbnail'] ).'" alt="'.get_the_title( $post->ID ).'" class="attachment-post-thumbnail wp-post-image default" />';
+        $ret = '<img src="'.esc_url( $wpmedium['general']['default_post_thumbnail'] ).'" alt="'.get_the_title( $post_id ).'" class="attachment-post-thumbnail wp-post-image default" />';
     }
     else {
         $ret = '';
