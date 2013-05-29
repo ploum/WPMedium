@@ -617,7 +617,7 @@ add_action('wp_enqueue_scripts', 'wpmedium_wp_head');
 /**
  * Load WP3.5.x Media Uploader's scripts and environment
  * 
- * @since WPMedium 1.1.1
+ * @since WPMedium 1.2
  */
 function wpmedium_wp_media() {
     wp_enqueue_media();
