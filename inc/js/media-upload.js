@@ -1,9 +1,12 @@
 jQuery(document).ready(function($) {
     
+    if ( !$('.theme_options').length > 0 )
+        return false;
+    
     var wpmedium_media_upload = function(target) {
         $('#upload_'+target+'_button').click(function(e) {
             targetfield = $(this).prev('input').prop('id');
-            tb_show('Mediacenter', 'media-upload.php?referer=wpmedium_theme_options&type=image&TB_iframe=true&post_id=0', false);  
+            wp.media.editor.open();
             e.preventDefault();
         });
         
@@ -14,17 +17,20 @@ jQuery(document).ready(function($) {
         });
     };
     
-    window.send_to_editor = function(html) {
-            var image_url = $('img',html).attr('src');
-            $('input#'+targetfield+'').val(image_url);
-            tb_remove();
-            $('#delete_'+targetfield+'_button').show();
-            if ( $('#upload_'+targetfield+'_preview img').length > 0 )
-                $('#upload_'+targetfield+'_preview img').attr('src', image_url);
-            else
-                $('#upload_'+targetfield+'_preview').html('<img style="max-width:200px;" src="'+image_url+'" />');
-            $('#submit_general_options').trigger('click');
-        }
+    var send_attachment_backup = wp.media.editor.send.attachment;
+    wp.media.editor.send.attachment = function(props, attachment) {
+        $('input#'+targetfield+'').val(attachment.url);
+        
+        $('#delete_'+targetfield+'_button').show();
+        if ( $('#upload_'+targetfield+'_preview img').length > 0 )
+            $('#upload_'+targetfield+'_preview img').attr('src', attachment.url);
+        else
+            $('#upload_'+targetfield+'_preview').html('<img style="max-width:200px;" src="'+attachment.url+'" />');
+        $('#submit_general_options').trigger('click');
+        
+        wp.media.editor.send.attachment = send_attachment_backup;
+        wp.media.editor.remove();
+    }
     
     if ( $('#upload_site_logo_button').length > 0 )
         wpmedium_media_upload('site_logo');
@@ -49,15 +55,19 @@ jQuery(document).ready(function($) {
             $(this).hide();
         });
         
-        window.send_to_editor = function(html) {
-            var image_url = $('img',html).attr('src');  
-            $('input#wpmedium_taxonomy_image').val(image_url);  
-            tb_remove();
+        var send_attachment_backup = wp.media.editor.send.attachment;
+            wp.media.editor.send.attachment = function(props, attachment) {
+             
+            $('input#wpmedium_taxonomy_image').val(attachment.url);  
+            wp.media.editor.remove();
             $('#delete_taxonomy_image').show();
             if ( $('#upload_taxonomy_image_preview img').length > 0 )
-                $('#upload_taxonomy_image_preview img').attr('src', image_url);
+                $('#upload_taxonomy_image_preview img').attr('src', attachment.url);
             else
-                $('#upload_taxonomy_image_preview').html('<img style="max-width:100%;" src="'+image_url+'" />');
+                $('#upload_taxonomy_image_preview').html('<img style="max-width:100%;" src="'+attachment.url+'" />');
+            
+            wp.media.editor.send.attachment = send_attachment_backup;
+            wp.media.editor.remove();
         }
     }
     

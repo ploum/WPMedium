@@ -607,6 +607,16 @@ function wpmedium_wp_head() {
 add_action('wp_enqueue_scripts', 'wpmedium_wp_head');
 
 /**
+ * Load WP3.5.x Media Uploader's scripts and environment
+ * 
+ * @since WPMedium 1.1.1
+ */
+function wpmedium_wp_media() {
+    wp_enqueue_media();
+}
+add_action( 'admin_enqueue_scripts', 'wpmedium_wp_media' );
+
+/**
  * Add custom styles the theme based on custom options
  * 
  * @since WPMedium 1.1
@@ -707,15 +717,12 @@ function wpmedium_admin_scripts() {
     wp_enqueue_style( 'style-admin' );
     wp_enqueue_style( 'GoogleFonts' );
     wp_enqueue_style( 'farbtastic' );
-    wp_enqueue_style( 'thickbox' );
     
     wp_register_script( 'wpmedium-display-options', get_template_directory_uri() . '/inc/js/wpmedium-options.js', array( 'farbtastic', 'jquery' ) );
     wp_register_script( 'wpmedium-image-upload', get_template_directory_uri() .'/inc/js/media-upload.js', array('jquery','media-upload','thickbox') ); 
     
     wp_enqueue_script( 'farbtastic' );
-    wp_enqueue_script( 'thickbox' );
     wp_enqueue_script( 'jquery-ui-slider' );
-    wp_enqueue_script( 'media-upload' );
     wp_enqueue_script( 'wpmedium-display-options' );
     wp_enqueue_script( 'wpmedium-image-upload' );
     
@@ -879,7 +886,7 @@ function wpmedium_options_callback( $section ) {
             $options = get_option( $wpmedium_options['options']['general_options']['page'] );
             $url = esc_url( $options[$section['id']] );
             $style = ($url == '' ? 'display:none;' : '' );
-            $html = '<div class="upload_preview" id="upload_post_thumbnail_preview">';
+            $html = '<div class="upload_preview" id="upload_default_post_thumbnail_preview">';
             $html .= '<img src="'.$url.'" alt="" />';
             $html .= '</div>';
             $html .= '<input type="hidden" id="'.$section['id'].'" name="'.$wpmedium_options['options']['general_options']['page'].'['.$section['id'].']" value="'.esc_attr($options[$section['id']]).'" class="image_url" />';
@@ -980,38 +987,5 @@ jQuery(document).ready(function($) {
             break;
     }
 } // end wpmedium_theme_social_options
-
-/**
- * Setup WP Media Upload tool
- * 
- * @since WPMedium 1.0
- */
-function wpmedium_media_upload_setup() {
-    global $pagenow;
-    if ( 'media-upload.php' == $pagenow || 'async-upload.php' == $pagenow )
-        add_filter( 'gettext', 'replace_thickbox_text', 1, 3 );
-}
-add_action( 'admin_init', 'wpmedium_media_upload_setup' ); 
-
-/**
- * Customize WP Media upload text
- * Not really sure I correctly understand this one's params,
- * but still, it works…
- * 
- * @since WPMedium 1.0
- *
- * @param string $translated_text modified text?
- * @param string $text current media tool text?
- * @param string $domain domain?
- */
-function replace_thickbox_text( $translated_text, $text, $domain ) { 
-    if ( 'Insert into Post' == $text ) { 
-        $referer = strpos( wp_get_referer(), 'wpmedium_theme_options' ); 
-        if ( $referer != '' ) { 
-            return __('Use As Logo', 'wpmedium' );  
-        }  
-    }  
-    return $translated_text;  
-}
 
 ?>
