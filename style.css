@@ -1011,11 +1011,6 @@ a, a:hover {
         width: 98% !important;
     }
     
-    #home .post,
-    #archive .post {
-        width: 34.750em !important;
-    }
-    
     .entry-header img.landscape {
         height: auto;
         width: 100%;
