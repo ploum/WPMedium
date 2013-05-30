@@ -15,8 +15,9 @@ register_nav_menu( 'primary', __( 'Primary Menu', 'wpmedium' ) );
 // This theme uses a custom image size for featured images, displayed on "standard" posts.
 add_theme_support( 'post-thumbnails' );
 
-// Unlimited height, soft crop
-set_post_thumbnail_size( 624, 9999 );
+// Custom images sizes
+add_image_size( 'large-featured-image', 640, 9999 );
+add_image_size( 'medium-featured-image', 464, 9999 );
 
 if ( !isset( $content_width ) )
     $content_width = 900;
@@ -170,7 +171,7 @@ function hex2rgb( $color ) {
  * @param string $size Default attachment size (optional)
  * @return string Post's thumbnail HTML code.
  */
-function wpmedium_get_post_thumbnail( $post_id = 0, $size = 'post-thumbnail' ) {
+function wpmedium_get_post_thumbnail( $post_id = 0, $size = 'large-featured-image' ) {
     global $wpmedium;
     
     if ( !$post_id ) {
@@ -210,8 +211,8 @@ function wpmedium_get_post_thumbnail( $post_id = 0, $size = 'post-thumbnail' ) {
  * 
  * @since WPMedium 1.0
  */
-function wpmedium_the_post_thumbnail() {
-    echo wpmedium_get_post_thumbnail();
+function wpmedium_the_post_thumbnail( $post_id = 0, $size = 'large-featured-image' ) {
+    echo wpmedium_get_post_thumbnail( $post_id, $size );
 }
 
 /**
