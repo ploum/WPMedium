@@ -836,7 +836,7 @@ a, a:hover {
 
 #single .entry-author-bottom,
 #page .entry-author-bottom {
-    /*display: none;*/
+    display: none;
 }
 
 #single .entry-author-bottom,
@@ -874,7 +874,7 @@ a, a:hover {
 #page .entry-author-side {
     border: 0;
     display: block;
-    left: 3em;
+    left: -10em;
     margin: 0.5em 0 0 0;
     padding: 0;
     position: absolute;
@@ -1050,9 +1050,12 @@ a, a:hover {
 
 /* Full */
 @media (min-width: 78em) and (max-width: 90em) {
-    #main {
+    
+    #home #main,
+    #archive #main {
         width: 72em !important;
     }
+    
     .site-menu,
     .site-categories,
     .archive-menu {
@@ -1067,8 +1070,10 @@ a, a:hover {
 
 /* Wide */
 @media (min-width: 60em) and (max-width: 78em) {
-    #main, 
-    #content, 
+    #home #main,
+    #archive #main, 
+    #home #content, 
+    #archive #content, 
     .archive-menu {
         width: 60em !important;
     }
@@ -1097,15 +1102,17 @@ a, a:hover {
     
     #single .entry-author-side,
     #page .entry-author-side {
-        left: 0.5em;
+        left: -8em;
         width: 6em;
     }
 }
 
 /* Large */
 @media (min-width: 48em) and (max-width: 60em) {
-    #main, 
-    #content, 
+    #home #main,
+    #archive #main, 
+    #home #content, 
+    #archive #content, 
     .site-menu,
     .site-categories,
     .archive-menu {
