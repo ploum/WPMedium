@@ -1,7 +1,8 @@
 <?php 
 $class = '';
 if ( is_sticky() && !is_paged() ) $class .= 'sticky';
-if ( !has_post_thumbnail() && ! get_theme_mod( 'wpmedium_post_thumbnail' ) ) $class .= ' no-thumbnail'; ?>
+if ( !has_post_thumbnail() && ! wpmedium_o( 'toggle_default_post_thumbnail' ) ) $class .= ' no-thumbnail'; ?>
+
 						<article id="post-<?php the_ID(); ?>" <?php post_class( $class ); ?>>
 							<header class="entry-header">
 								<div class="entry-header-image">
@@ -11,11 +12,11 @@ if ( !has_post_thumbnail() && ! get_theme_mod( 'wpmedium_post_thumbnail' ) ) $cl
 									<a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( sprintf( __( 'Permalink to %s', 'wpmedium' ), the_title_attribute( 'echo=0' ) ) ); ?>" rel="bookmark"><?php the_title(); ?></a>
 								</h1>
 							</header><!-- .entry-header -->
-
+							    
 							<div class="entry-content">
-								<?php the_excerpt(); ?>
+								<?php ( is_sticky() ? wpmedium_the_long_excerpt( get_the_content() ) : the_excerpt() ); ?>
 							</div><!-- .entry-content -->
-
+							
 							<footer class="entry-meta">
 								<div class="wrap">
 									<?php wpmedium_post_entry_meta(); ?>
