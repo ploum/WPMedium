@@ -23,11 +23,11 @@ jQuery(window).load(function($) {
 		jQuery('#menu-item-toggle a').bind('click', function(e) {
 			e.preventDefault();
 			if ( jQuery(this).hasClass('off') ) {
-				jQuery('.site-menu ul').children('li.menu-item').show();
+				jQuery('.site-menu ul').children('li').show();
 				jQuery(this).removeClass('off').addClass('on').text('Menu «');
 			}
 			else {
-				jQuery('.site-menu ul').children('li.menu-item').hide();
+				jQuery('.site-menu ul').children('li').not(':first').hide();
 				jQuery(this).removeClass('on').addClass('off').text('Menu »');
 			}
 		});

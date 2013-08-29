@@ -5,7 +5,8 @@ Description: Clean and simple Medium like WordPress theme
 Author: Charlie MERLAND
 Author URI: http://www.caercam.org/
 Version: 1.4
-Tags: white, gray, custom-header, custom-background
+Tags: light, gray, white, one-column, two-columns, three-columns, custom-header, custom-menu, featured-images, sticky-post, theme-options, translation-ready
+Text Domain: wpmedium
 
 License: GNU GPL V3
 License URI: http://www.gnu.org/licenses/gpl-3.0.en.html
@@ -379,6 +380,17 @@ a, a:hover {
 
 .site-menu li.selected {
     background-color: #3B3B3B;
+}
+
+#menu-item-toggle {
+    width: 100%;
+}
+
+#menu-item-toggle a {
+    display: block;
+    padding: 0.1em 0;
+    text-align: center;
+    width: 100%;
 }
 
 .site-categories {
@@ -1057,9 +1069,11 @@ a, a:hover {
         width: 98% !important;
     }
     
-    .site-content article,
+    /*.site-content article,*/
     #home article.post,
-    #archive article.post {
+    #home article.hentry,
+    #archive article.post,
+    #archive article.hentry {
         margin: 0.5em !important;
         width: 29em !important;
     }
@@ -1174,7 +1188,12 @@ a, a:hover {
     
     #single article,
     #page article {
-        width: 98% !important;
+        width: 100% !important;
+    }
+    
+    #single .entry-title,
+    #page .entry-title {
+        font-size: 3em;
     }
     
     #single .entry-thumb img,
@@ -1194,7 +1213,7 @@ a, a:hover {
     
     #single .entry-author,
     #page .entry-author {
-        padding: 1em 0.625em;
+        padding: 1em 0;
         width: 100% !important;
     }
     
@@ -1206,22 +1225,25 @@ a, a:hover {
     
     #single .entry-author .author-avatar,
     #page .entry-author .author-avatar {
+        margin-left: 1em;
         width: 3.500em;
     }
     
     #single .entry-author .author-description,
     #page .entry-author .author-description {
+        min-height: auto;
         width: 65%;
     }
     
     #single .entry-date,
     #page .entry-date {
-        border: 0;
+        border: 0 !important;
         clear: both;
-        float: none;
+        float: none !important;
         margin: 1em 0 0 0;
-        min-height: 2.75em;
+        min-height: auto !important;
         padding: 1em 0 0 0;
+        text-align: right;
     }
     
     #single .entry-date h6,
@@ -1292,7 +1314,8 @@ a, a:hover {
         width: 100% !important;
     }
     
-    .site-content .post {
+    .site-content .post,
+    .site-content .hentry {
         margin: 0.938em 0 !important;
         width: 100% !important;
     }
@@ -1301,8 +1324,9 @@ a, a:hover {
         width: 100%;
     }
     
-    #single .post {
-        width: 100% !important;
+    #single article,
+    #page article {
+        width: 90% !important;
     }
     
     .entry-header-image {
@@ -1313,6 +1337,11 @@ a, a:hover {
     .entry-header img.wp-post-image {
         height: auto;
         width: 100% !important;
+    }
+    
+    #single .entry-title,
+    #page .entry-title {
+        font-size: 3em;
     }
     
     #single .entry-thumb img,
@@ -1343,22 +1372,25 @@ a, a:hover {
     
     #single .entry-author .author-avatar,
     #page .entry-author .author-avatar {
+        margin-left: 1em;
         width: 3.500em;
     }
     
     #single .entry-author .author-description,
     #page .entry-author .author-description {
+        min-height: auto;
         width: 65%;
     }
     
     #single .entry-date,
     #page .entry-date {
-        border: 0;
+        border: 0 !important;
         clear: both;
-        float: none;
-        margin: 0.938em 0 0 0;
-        min-height: 2.75em;
-        padding: 0.938em 0 0 0;
+        float: none !important;
+        margin: 1em 0 0 0;
+        min-height: auto !important;
+        padding: 1em 0 0 0;
+        text-align: right;
     }
     
     #single .entry-date h6,
@@ -1390,14 +1422,17 @@ a, a:hover {
     }
     
     #content {
-        width: 100% !important;
+        width: 90% !important;
     }
-    
     
     .site-menu,
     .site-categories,
     .archive-menu {
-        width: 96% !important;
+        width: 90% !important;
+    }
+    
+    .site-categories a {
+        padding: 0 0.75em;
     }
     
     .site-menu, .archive-menu {
@@ -1438,7 +1473,8 @@ a, a:hover {
         width: 100%;
     }
     
-    .site-content .post {
+    .site-content .post,
+    .site-content .hentry {
         margin-left: auto !important;
         margin-right: auto !important;
         width: 100% !important;
@@ -1456,6 +1492,16 @@ a, a:hover {
     
     .entry-meta {
         width: 100% !important;
+    }
+    
+    #single article,
+    #page article {
+        width: 100%;
+    }
+    
+    #single .entry-title,
+    #page .entry-title {
+        font-size: 3em;
     }
     
     #single .entry-author,
@@ -1481,12 +1527,30 @@ a, a:hover {
     
     #single .entry-author .author-avatar,
     #page .entry-author .author-avatar {
+        margin-left: 1em;
         width: 3.500em;
     }
     
     #single .entry-author .author-description,
     #page .entry-author .author-description {
+        min-height: auto;
         width: 65%;
+    }
+    
+    #single .entry-date,
+    #page .entry-date {
+        border: 0 !important;
+        clear: both;
+        float: none !important;
+        margin: 1em 0 0 0;
+        min-height: auto !important;
+        padding: 1em 0 0 0;
+        text-align: right;
+    }
+    
+    #single .entry-date h6,
+    #page .entry-date h6 {
+        display: inline-block;
     }
 }
 
