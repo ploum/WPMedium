@@ -97,11 +97,13 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 	function wpmedium_settings( $force = false ) {
 
 		$default_settings  = array(
-			'authorized_taxonomy'    => array( 'category', 'post_tag' ),
-			'default_taxonomy'       => 'post_tag',
-			'default_post_thumbnail' => get_template_directory_uri() . '/img/wpmedium-post-thumbnail.jpg',
-			'default_logo'           => get_template_directory_uri() . '/img/WPMedium-logo-simple-64.png',
-			'default_W_image'        => get_template_directory_uri() . '/img/WPMedium-logo-simple-64.png',
+			'authorized_taxonomy'        => array( 'category', 'post_tag' ),
+			'ajax_load'                  => true,
+			'default_taxonomy'           => 'post_tag',
+			'use_post_thumbnail'         => true,
+			'default_post_thumbnail'     => get_template_directory_uri() . '/img/wpmedium-post-thumbnail.jpg',
+			'logo'                       => get_template_directory_uri() . '/img/WPMedium-logo-simple-128.png',
+			'w'                          => get_template_directory_uri() . '/img/WPMedium-logo-simple-64.png',
 			'social' => array(
 				'facebook_profile'   => '',
 				'twitter_profile'    => '',
@@ -153,7 +155,13 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 	 */
 	function wpmedium_o( $search = '', $value = null ) {
 
-		$options = get_option( '_wpmedium_settings', wpmedium_settings() );
+		$default   = wpmedium_settings();
+		$theme_mod = get_theme_mod( 'wpmedium_' . $search, $default[ $search ] );
+
+		if ( '' != $theme_mod )
+			return $theme_mod;
+
+		$options = get_option( '_wpmedium_settings', $default );
 
 		if ( '' != $search && is_null( $value ) ) {
 			$s = explode( '-', $search );
@@ -352,7 +360,7 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 			
 			$ret = '<img src="'.$attachment[0].'" alt="'.get_the_title( $post_id ) . '" class="attachment-post-thumbnail wp-post-image '.$class.'" />';
 		}
-		else if ( get_theme_mod( 'wpmedium_use_post_thumbnail', true ) && '' != get_theme_mod( 'wpmedium_post_thumbnail' ) ) {
+		else if ( wpmedium_o( 'use_post_thumbnail' ) && '' != wpmedium_o( 'default_post_thumbnail' ) ) {
 			$ret = '<img src="'.esc_url( wpmedium_o( 'default_post_thumbnail' ) ) . '" alt="'.get_the_title( $post_id ) . '" class="attachment-post-thumbnail wp-post-image default" />';
 		}
 		else {
@@ -518,7 +526,7 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 
 		global $term;
 
-		$ret = get_theme_mod( 'wpmedium_logo' );
+		$ret = wpmedium_o( 'logo' );
 
 		if ( !in_array( $term->taxonomy, wpmedium_o( 'authorized_taxonomy' ) ) )
 			return false;
@@ -707,7 +715,7 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 	* @return   string      HTML formatted links
 	*/
 	function wpmedium_get_nav_link() {
-		return ( get_theme_mod( 'wpmedium_ajax_load', true ) ? '<a id="loadmore" href="#">' . __( 'Load More', 'wpmedium' ) . '</a>' : posts_nav_link( ' &#183; ', sprintf( '<span class="pagination-left">%s</span>', __( 'Prev page', 'wpmedium' ) ), sprintf( '<span class="pagination-right">%s</span>', __( 'Next page', 'wpmedium' ) ) ) );
+		return ( wpmedium_o( 'ajax_load' ) ? '<a id="loadmore" href="#">' . __( 'Load More', 'wpmedium' ) . '</a>' : posts_nav_link( ' &#183; ', sprintf( '<span class="pagination-left">%s</span>', __( 'Prev page', 'wpmedium' ) ), sprintf( '<span class="pagination-right">%s</span>', __( 'Next page', 'wpmedium' ) ) ) );
 	}
 
 	/**
@@ -737,7 +745,7 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 	* @return   string        The site logo URL.
 	*/
 	function wpmedium_get_site_logo() {
-		$site_logo = get_theme_mod( 'wpmedium_si', wpmedium_o( 'site_logo' ) );
+		$site_logo = wpmedium_o( 'logo' );
 		if ( isset( $site_logo ) && '' != $site_logo )
 			return '<img class="site-avatar" src="'.esc_url( $site_logo ) . '" alt="" />';
 		else if ( file_exists( get_template_directory() . '/img/wp-badge.png' ) )
@@ -759,11 +767,9 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 	* @since    1.1
 	*/
 	function wpmedium_get_W() {
-		$W_image = get_theme_mod( 'wpmedium_w' );
+		$W_image = wpmedium_o( 'w' );
 		if ( isset( $W_image ) && '' != $W_image )
 			$ret = '<img src="' . esc_url( $W_image ) . '" alt="W" />';
-		else if ( file_exists( wpmedium_o( 'default_W_image' ) ) )
-			$ret = '<img src="' . wpmedium_o( 'default_W_image' ) . '" alt="W" />';
 		else
 			$ret = '';
 
@@ -788,9 +794,10 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 	function wpmedium_get_social_links() {
 
 		$ret = '';
+		$networks = get_option( 'wpmedium_social_options' );
 
-		if ( count( wpmedium_o( 'social' ) ) > 0 ) {
-			foreach ( wpmedium_o( 'social' ) as $network => $url ) {
+		if ( count( $networks ) > 0 ) {
+			foreach ( $networks as $network => $url ) {
 				if ( $url != '' )
 					$ret .= '<a href="'.esc_url( $url ) . '"><i class="'.str_replace( '_profile', '', $network ) . '" style="background-image:url('.get_template_directory_uri() . '/img/icons/picon_social/'.str_replace( '_profile', '', $network ) . '.png)"></i></a> ';
 			}
@@ -969,8 +976,8 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 		<div id="settings_errors"><?php settings_errors(); ?></div>
 		
 		<form id="social_options" class="theme_options_panel" method="post" action="options.php">
-		<?php settings_fields( 'wpmedium_theme_social_options' ); ?>
-		<?php do_settings_sections( 'wpmedium_theme_social_options' ); ?>
+		<?php settings_fields( 'wpmedium_social_options' ); ?>
+		<?php do_settings_sections( 'wpmedium_social_options' ); ?>
 		<?php submit_button( '', 'button-primary theme-panel-submit', 'submit', true, array( 'id' => 'submit_social_options' ) ); ?>  
 		</form>
 
@@ -1032,13 +1039,13 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 			)
 		);
 
-		add_option( 'wpmedium_theme_social_options' );
+		add_option( 'wpmedium_social_options' );
 
 		add_settings_section(
 			'wpmedium_social_settings_section',
 			__( 'Social Settings', 'wpmedium' ),
 			'',
-			'wpmedium_theme_social_options'
+			'wpmedium_social_options'
 		);
 
 		foreach ( $options as $o ) {
@@ -1046,7 +1053,7 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 				$o['_id'],
 				$o['_title'],
 				'wpmedium_options_callback', 
-				'wpmedium_theme_social_options',
+				'wpmedium_social_options',
 				'wpmedium_social_settings_section',
 				array(
 					'id'    => $o['_id'],
@@ -1056,8 +1063,8 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 		}
 
 		register_setting(  
-			'wpmedium_theme_social_options',
-			'wpmedium_theme_social_options'
+			'wpmedium_social_options',
+			'wpmedium_social_options'
 		);
 
 	}
@@ -1070,10 +1077,13 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 	* @param string $section Option section to handle
 	*/
 	function wpmedium_options_callback( $section ) {
+		$default = wpmedium_settings();
+		$value   = get_option( 'wpmedium_social_options', $default['social'] );
+		$value   = $value[ $section['id'] ];
 ?>
-			<input type="text" id="<?php echo $section['id']; ?>" name="wpmedium_social_options[<?php echo $section['id']; ?>]" value="<?php echo esc_attr( $this->wpmedium_o( 'social_options-'.$section['id'] ) ); ?>" style="background-image: url(<?php echo get_template_directory_uri(); ?>/img/icons/social_media/_social_<?php echo str_replace( '_profile', '', $section['id'] ); ?>.png);" />
+			<input type="text" id="<?php echo $section['id']; ?>" name="wpmedium_social_options[<?php echo $section['id']; ?>]" value="<?php echo esc_attr( $value ); ?>" style="background-image: url(<?php echo get_template_directory_uri(); ?>/img/icons/social_media/_social_<?php echo str_replace( '_profile', '', $section['id'] ); ?>.png);" />
 <?php
-	} // end wpmedium_theme_social_options
+	}
 
 
 /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -1137,11 +1147,11 @@ function wpmedium_default() {
 		// Default Images 
 		'Images' => array(
 			'logo' => array(
-				'url'   => wpmedium_o( 'default_logo' ),
+				'url'   => wpmedium_o( 'logo' ),
 				'label' => __( 'Logo', 'wpmedium' ),
 			),
 			'w' => array(
-				'url'   => wpmedium_o( 'default_W_image' ),
+				'url'   => wpmedium_o( 'w' ),
 				'label' => __( 'W Image', 'wpmedium' ),
 			),
 			'post_thumbnail' => array(
@@ -1152,16 +1162,6 @@ function wpmedium_default() {
 	);
 
 	return $defaults;
-}
-
-function wpmedium_get_default_value( $key ) {
-	$defaults = wpmedium_default();
-	$keys = explode( '-', $key );
-	return ( count( $keys ) > 0 ? wpmedium_find_default_value( $defaults, $keys ) : false );
-}
-
-function wpmedium_find_default_value( $array, $key ) {
-	return ( count( $key ) > 0 ? wpmedium_find_default_value( $array[ $key[0] ], array_slice( $key, 1 ) ) : $array );
 }
 
 

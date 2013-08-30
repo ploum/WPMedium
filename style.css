@@ -915,8 +915,8 @@ a, a:hover {
 }
 
 #archive .sticky .entry-header-image img {
-    height: auto;
-    width: 73em;
+    /*height: auto;
+    width: 73em;*/
 }
 
 #archive .sticky .entry-meta {
