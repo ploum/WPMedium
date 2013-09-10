@@ -1,7 +1,7 @@
 <?php 
 $class = '';
 if ( is_sticky() && !is_paged() ) $class .= 'sticky';
-if ( !has_post_thumbnail() && ! get_theme_mod( 'wpmedium_post_thumbnail' ) ) $class .= ' no-thumbnail'; ?>
+if ( ! has_post_thumbnail() && ! get_theme_mod( 'use_post_thumbnail' ) ) $class .= ' no-thumbnail'; ?>
 						<article id="post-<?php the_ID(); ?>" <?php post_class( $class ); ?>>
 							<header class="entry-header">
 								<div class="entry-header-image">

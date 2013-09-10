@@ -158,7 +158,7 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 		$default   = wpmedium_settings();
 		$theme_mod = get_theme_mod( 'wpmedium_' . $search, $default[ $search ] );
 
-		if ( '' != $theme_mod )
+		if ( '' !== $theme_mod )
 			return $theme_mod;
 
 		$options = get_option( '_wpmedium_settings', $default );
@@ -1304,7 +1304,7 @@ function wpmedium_theme_customizer( $wp_customize ) {
 	$wp_customize->add_control(
 		'wpmedium_use_post_thumbnail',
 		array(
-			'settings' => 'wpmedium_post_thumbnail',
+			'settings' => 'wpmedium_use_post_thumbnail',
 			'label'    => __( 'Use Default Post Thumbnail', 'wpmedium' ),
 			'section'  => 'wpmedium_settings_section',
 			'type'     => 'checkbox',
