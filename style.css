@@ -1049,8 +1049,8 @@ a, a:hover {
     }
     
     .entry-header img.landscape {
-        height: auto;
-        width: 100%;
+        height: 100%;
+        width: auto;
     }
 }
 
@@ -1086,6 +1086,13 @@ a, a:hover {
     article.sticky .entry-header img {
 	height: auto;
         width: 100% !important;
+    }
+    
+    #home article .entry-header img.landscape,
+    #archive article .entry-header img.landscape {
+        height: auto;
+        overflow: hidden;
+        width: 100%;
     }
     
     #single .entry-author-side,
@@ -1140,7 +1147,7 @@ a, a:hover {
     .site-menu,
     .site-categories,
     .archive-menu {
-        width: 96% !important;
+        width: 90% !important;
     }
     
     .site-menu, .archive-menu {
