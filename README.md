@@ -29,7 +29,7 @@ Changelog:
 ----------
 
 * 1.4
-** Switching to Customize API
-** AJAX Posts load
-** WordPress included Masonry
-** Taxonomy Images desactivated
+  * Switching to Customize API
+  * AJAX Posts load
+  * WordPress included Masonry
+  * Taxonomy Images desactivated
