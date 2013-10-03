@@ -27,7 +27,18 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 		add_theme_support( 'automatic-feed-links' );
 
 		// Dummy sidebar
-		register_sidebar( array( 'name' => 'some sidebar' ) );
+		register_sidebar(
+			array(
+				'name'          => __( 'Footer Sidebar', 'wpmedium' ),
+				'id'            => 'footer-sidebar',
+				'description'   => '',
+				'class'         => '',
+				'before_widget' => '<li id="%1$s" class="widget %2$s">',
+				'after_widget'  => '</li>',
+				'before_title'  => '<h2 class="widgettitle">',
+				'after_title'   => '</h2>'
+			)
+		);
 
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menu( 'primary', __( 'Primary Menu', 'wpmedium' ) );
@@ -869,6 +880,15 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 		// Title Hover Color
 		if ( get_theme_mod( 'wpmedium_header_title_hover' ) != '' )
 			echo '.entry-header .entry-title a:hover {color:'.get_theme_mod( 'wpmedium_header_title_hover' ) . ' !important;} ';
+		//  Footer Text Color
+		if ( get_theme_mod( 'wpmedium_footer' ) != '' )
+			echo '.site-footer {color:'.get_theme_mod( 'wpmedium_footer' ) . ' !important;} ';
+		//  Footer Background Color
+		if ( get_theme_mod( 'wpmedium_footer_background' ) != '' )
+			echo '.footer-sidebar {background:'.get_theme_mod( 'wpmedium_footer_background' ) . ' !important;} ';
+		//  Footer Titles Color
+		if ( get_theme_mod( 'wpmedium_footer_widgettitle' ) != '' )
+			echo '.footer-inner .widgettitle {color:'.get_theme_mod( 'wpmedium_footer_widgettitle' ) . ' !important;} ';
 
 		echo '    </style>'."\n";
 	}
@@ -1112,24 +1132,24 @@ function wpmedium_default() {
 		// Color theme
 		'Colors' => array(
 			'background' => array(
-				'color' => '#f9f9f9',
-				'label' => __( 'Background Color', 'wpmedium' ),
+				'color'       => '#f9f9f9',
+				'label'       => __( 'Background Color', 'wpmedium' ),
 			),
 			'w_background' => array(
-				'color' => '#dfdfdf',
-				'label' => __( 'W Background Color', 'wpmedium' ),
+				'color'       => '#dfdfdf',
+				'label'       => __( 'W Background Color', 'wpmedium' ),
 			),
 			'text' => array(
-				'color' => '#1d1d1d',
-				'label' => __( 'Text Color', 'wpmedium' ),
+				'color'       => '#1d1d1d',
+				'label'       => __( 'Text Color', 'wpmedium' ),
 			),
 			'header_overlay' => array(
-				'color' => '#000000',
-				'label' => __( 'Header Overlay Color', 'wpmedium' ),
+				'color'       => '#000000',
+				'label'       => __( 'Header Overlay Color', 'wpmedium' ),
 			),
 			'header_sidebar' => array(
-				'color' => '#ffffff',
-				'label' => __( 'Header Sidebar Color', 'wpmedium' ),
+				'color'       => '#ffffff',
+				'label'       => __( 'Header Sidebar Color', 'wpmedium' ),
 			),
 			'header_title' => array(
 				'color'       => '#444444',
@@ -1142,6 +1162,18 @@ function wpmedium_default() {
 				'hover'       => '#45568c',
 				'label'       => __( 'Link Color', 'wpmedium' ),
 				'label_hover' => __( 'Link Hover Color', 'wpmedium' ),
+			),
+			'footer' => array(
+				'color'       => '#aaa',
+				'label'       => __( 'Footer Text Color', 'wpmedium' ),
+			),
+			'footer_background' => array(
+				'color'       => '#d6d6d6',
+				'label'       => __( 'Footer Background Color', 'wpmedium' ),
+			),
+			'footer_widgettitle' => array(
+				'color'       => '#424242',
+				'label'       => __( 'Footer Titles Color', 'wpmedium' ),
 			),
 		),
 		// Default Images 

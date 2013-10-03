@@ -5,7 +5,7 @@
  * @since WPMedium 1.0
  */
 get_header(); $term = get_queried_object(); ?>
-    
+
 		<div id="archive" class="hfeed site">
 
 			<header id="masthead" class="site-header" role="banner">
@@ -51,7 +51,5 @@ get_header(); $term = get_queried_object(); ?>
 				</div><!-- #primary -->
 
 			</div><!-- #main -->
-
-		</div><!-- #archive -->
 
 <?php get_footer(); ?> 

@@ -5,7 +5,7 @@
  * @since WPMedium 1.0
  */
 get_header(); ?>
-    
+
 		<div id="single" class="hfeed site">
 
 			<div id="main" class="wrapper">
@@ -39,7 +39,5 @@ endif; // end have_posts() check ?>
 				</div><!-- #primary -->
 
 			</div><!-- #main -->
-
-		</div><!-- #single -->
 
 <?php get_footer(); ?> 

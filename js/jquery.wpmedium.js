@@ -1,5 +1,34 @@
 jQuery(window).load(function($) {
 	
+	var responsive_menu = function() {
+		if ( jQuery(window).width() < 760 ) {
+			jQuery('.site-menu ul').children('li').hide();
+			if ( ! jQuery('#menu-item-toggle').length ) {
+				jQuery('.site-menu > ul').prepend('<li id="menu-item-toggle"><a href="#" class="off">Menu »</a></li>');
+			}
+			else {
+				jQuery('#menu-item-toggle').show();
+			}
+			jQuery('#menu-item-toggle a').unbind('click').bind('click', function(e) {
+				e.preventDefault();
+				if ( jQuery(this).hasClass('off') ) {
+					jQuery('.site-menu ul').children('li').show();
+					jQuery(this).removeClass('off').addClass('on').text('Menu «');
+				}
+				else {
+					jQuery('.site-menu ul').children('li').not(':first').hide();
+					jQuery(this).removeClass('on').addClass('off').text('Menu »');
+				}
+			});
+		}
+		else {
+			jQuery('.site-menu ul').children('li').show();
+			jQuery('#menu-item-toggle').remove();
+		}
+	};
+
+	responsive_menu();
+
 	if ( jQuery('#show_comments').length > 0 ) {
 		jQuery('#show_comments').bind('click', function(e) {
 			e.preventDefault();
@@ -16,22 +45,6 @@ jQuery(window).load(function($) {
 			jQuery('#show_comments').show();
 		});
 	}
-	
-	if ( jQuery(window).width() < 760 ) {
-		jQuery('.site-menu ul').children('li').hide();
-		jQuery('.site-menu ul').prepend('<li id="menu-item-toggle"><a href="#" class="off">Menu »</a></li>');
-		jQuery('#menu-item-toggle a').bind('click', function(e) {
-			e.preventDefault();
-			if ( jQuery(this).hasClass('off') ) {
-				jQuery('.site-menu ul').children('li').show();
-				jQuery(this).removeClass('off').addClass('on').text('Menu «');
-			}
-			else {
-				jQuery('.site-menu ul').children('li').not(':first').hide();
-				jQuery(this).removeClass('on').addClass('off').text('Menu »');
-			}
-		});
-	}
 
 	if ( jQuery('#content > .hentry').length > 1 ) {
 		jQuery('#content').masonry();
@@ -41,6 +54,8 @@ jQuery(window).load(function($) {
 		if ( jQuery('#content > .hentry').length > 1 ) {
 			jQuery('#content').masonry('reload');
 		}
+
+		responsive_menu();
 	});
 
 	jQuery('#loadmore').click(function(e) {
@@ -66,4 +81,5 @@ jQuery(window).load(function($) {
 			},
 		});
 	});
+	
 });

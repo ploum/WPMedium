@@ -34,9 +34,9 @@ get_header(); ?>
 					<nav class="site-menu">
 						<ul class="site-menu-links">
 <?php if ( has_nav_menu( 'primary' ) ) : ?>
-							<?php wp_nav_menu( array( 'menu' => 'primary', 'container' => '', 'items_wrap' => '%3$s' ) ); ?>
+							<?php wp_nav_menu( array( 'theme_location' => 'primary', 'container' => '', 'items_wrap' => '%3$s' ) ); ?>
 <?php else : ?>
-							<?php wp_list_categories( array( 'title_li' => '', 'hierarchical' => 0 ) ); ?>
+							<?php //wp_list_categories( array( 'title_li' => '', 'hierarchical' => 0 ) ); ?>
 <?php endif; ?>
 							<li id="menu-item-search" class="menu-item menu-item-search"><?php get_search_form(); ?></li>
 						</ul>
@@ -70,7 +70,5 @@ get_header(); ?>
 				</div><!-- #primary -->
 
 			</div><!-- #main .wrapper -->
-
-		</div><!-- #home -->
 
 <?php get_footer(); ?> 

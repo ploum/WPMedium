@@ -5,5 +5,16 @@
  * @since WPMedium 1.0
  */
 
-if ( is_active_sidebar( 'sidebar' ) )
-    dynamic_sidebar( 'sidebar-1' ); ?>
+if ( is_dynamic_sidebar( 'footer-sidebar' ) ) : ?>
+			<div id="footer-sidebar" class="footer-sidebar">
+
+				<div class="footer-inner">
+
+					<ul>
+						<?php dynamic_sidebar( 'footer-sidebar' ); ?>
+					</ul>
+
+				</div>
+
+			</div><!-- #footer-sidebar -->
+<?php endif; ?>

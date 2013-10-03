@@ -5,7 +5,7 @@
  * @since WPMedium 1.0
  */
 get_header(); ?>
-    
+
 		<div id="page" class="hfeed site">
 
 			<div id="main" class="wrapper">
@@ -38,7 +38,5 @@ get_header(); ?>
 				</div><!-- #primary -->
 
 			</div><!-- #main -->
-
-		</div><!-- #page -->
 
 <?php get_footer(); ?> 
