@@ -330,6 +330,29 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 		echo wpmedium_get_post_entry_meta();
 	}
 
+	/**
+	* Display WPMedium Credits.
+	* 
+	* @since    1.4.1
+	*/
+	function wpmedium_credits() {
+		$default = wpmedium_default();
+		$default = $default['Basics']['credit'];
+
+		echo get_theme_mod( 'wpmedium_credits', $default );
+	}
+
+	/**
+	* Display WPMedium Credits.
+	* 
+	* @since    1.4.1
+	*/
+	function wpmedium_copyright() {
+		$default = wpmedium_default();
+		$default = $default['Basics']['copyright'];
+
+		echo get_theme_mod( 'wpmedium_copyright', $default );
+	}
 
 	/** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 	*
@@ -1153,7 +1176,8 @@ function wpmedium_default() {
 			'description'      => '<strong>WPMedium</strong>, a <em>nice</em> WordPress blog theme based on Medium.com, by <a href="http://www.caercam.org/">Charlie MERLAND</a>.',
 			'logo'             => get_template_directory_uri() . '/img/WPMedium-logo-simple-32.png',
 			'post_thumbnail'   => get_template_directory_uri() . '/img/wpmedium-post-thumbnail.jpg',
-			'copyright'        => sprintf( '&copy; %d WPMedium<br /> &mdash; %s', date('Y'), __( 'All rights reserved', 'wpmedium' ) ),
+			'copyright'        => sprintf( '&copy; %s &mdash; <a href="%s">%s</a>', date( 'Y' ), home_url(), get_bloginfo( 'name' ) ),
+			'credit'           => sprintf( '%s <a href="http://wordpress.org">WordPress</a> &mdash; %s <a href="http://www.caercam.org/wpmedium">WPMedium</a> %s <a href="http://www.caercam.org/">CaerCam</a>', __( 'Proudly Powered By', 'wpmedium' ), __( 'Theme', 'wpmedium' ), __( 'By', 'wpmedium' ) )
 		),
 		// Color theme
 		'Colors' => array(
@@ -1324,6 +1348,9 @@ function wpmedium_theme_customizer( $wp_customize ) {
 
 	}
 
+	/*
+	 * WPMedium Settings Section
+	 */
 	$wp_customize->add_section(
 		'wpmedium_settings_section',
 		array(
@@ -1333,6 +1360,7 @@ function wpmedium_theme_customizer( $wp_customize ) {
 		)
 	);
 
+	/* AJAX loading */
 	$wp_customize->add_setting(
 		'wpmedium_ajax_load',
 		array(
@@ -1351,6 +1379,7 @@ function wpmedium_theme_customizer( $wp_customize ) {
 		)
 	);
 
+	/* Post Thumbnails */
 	$wp_customize->add_setting(
 		'wpmedium_use_post_thumbnail',
 		array(
@@ -1369,6 +1398,7 @@ function wpmedium_theme_customizer( $wp_customize ) {
 		)
 	);
 
+	/* Default Taxonomy */
 	$wp_customize->add_setting(
 		'wpmedium_default_taxonomy',
 		array(
@@ -1387,6 +1417,44 @@ function wpmedium_theme_customizer( $wp_customize ) {
 				'category' => __( 'Category', 'wpmedium' ),
 				'post_tag' => __( 'Post Tag', 'wpmedium' )
 			),
+		)
+	);
+
+	/* WPMedium Credits */
+	$wp_customize->add_setting(
+		'wpmedium_credits',
+		array(
+			'default'   => $options['Basics']['credit'],
+			'transport' => 'postMessage',
+		)
+	);
+
+	$wp_customize->add_control(
+		'wpmedium_credits',
+		array(
+			'settings' => 'wpmedium_credits',
+			'label'    => __( 'WPMedium Credits Line', 'wpmedium' ),
+			'section'  => 'title_tagline',
+			'type'     => 'text',
+		)
+	);
+
+	/* WPMedium Credits */
+	$wp_customize->add_setting(
+		'wpmedium_copyright',
+		array(
+			'default'   => $options['Basics']['copyright'],
+			'transport' => 'postMessage',
+		)
+	);
+
+	$wp_customize->add_control(
+		'wpmedium_copyright',
+		array(
+			'settings' => 'wpmedium_copyright',
+			'label'    => __( 'WPMedium Copyright Line', 'wpmedium' ),
+			'section'  => 'title_tagline',
+			'type'     => 'text',
 		)
 	);
 

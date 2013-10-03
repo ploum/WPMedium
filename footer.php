@@ -13,11 +13,11 @@
 				<div class="footer-inner">
 
 					<div class="footer-copyright">
-						<span class="copyright"><?php printf( '&copy; %s &mdash; <a href="%s">%s</a>', date( 'Y' ), home_url(), get_bloginfo( 'name' ) ); ?></span>
+						<span class="copyright"><?php wpmedium_copyright(); ?></span>
 					</div>
 
 					<div class="footer-credit">
-						<span class="credit"><?php printf( '%s <a href="http://wordpress.org">WordPress</a> &mdash; %s <a href="http://www.caercam.org/wpmedium">WPMedium</a> %s <a href="http://www.caercam.org/">CaerCam</a>', __( 'Proudly Powered By', 'wpmedium' ), __( 'Theme', 'wpmedium' ), __( 'By', 'wpmedium' ) ); ?></span>
+						<span class="credit"><?php wpmedium_credits(); ?></span>
 					</div>
 
 				</div>
