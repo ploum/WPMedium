@@ -642,12 +642,38 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 		}*/
 	}
 
-
 	/** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 	*
 	*                    WPMedium Menus & Pagination
 	* 
 	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+	/**
+	* WPMedium default primary menu.
+	* If no primary menu is set, fallback to default taxonomy terms list.
+	* 
+	* @since    1.4.1
+	*/
+	function wpmedium_primary_menu() {
+
+		if ( 'category' == wpmedium_o( 'default_taxonomy' ) ) {
+			wp_list_categories( array( 'title_li' => '', 'hierarchical' => 0 ) );
+		}
+		else if ( 'post_tag' == wpmedium_o( 'default_taxonomy' ) ) {
+
+			$tags = get_tags(
+				array(
+					'orderby' =>'count',
+					'order'   => 'DESC',
+					'number'  => 8
+				)
+			);
+			
+			foreach ( $tags as $tag )
+			    printf( '<li id="menu-item-%d" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-%d"><a href="%s">%s</a></li>', $tag->term_id, $tag->term_id, get_tag_link( $tag->term_id ), $tag->name );
+		}
+
+	}
 
 	/**
 	* Get the archive control menu links.

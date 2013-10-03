@@ -36,7 +36,7 @@ get_header(); ?>
 <?php if ( has_nav_menu( 'primary' ) ) : ?>
 							<?php wp_nav_menu( array( 'theme_location' => 'primary', 'container' => '', 'items_wrap' => '%3$s' ) ); ?>
 <?php else : ?>
-							<?php //wp_list_categories( array( 'title_li' => '', 'hierarchical' => 0 ) ); ?>
+							<?php wpmedium_primary_menu(); ?>
 <?php endif; ?>
 							<li id="menu-item-search" class="menu-item menu-item-search"><?php get_search_form(); ?></li>
 						</ul>
