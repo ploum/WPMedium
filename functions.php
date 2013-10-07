@@ -343,7 +343,7 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 	}
 
 	/**
-	* Display WPMedium Credits.
+	* Display WPMedium Copyright.
 	* 
 	* @since    1.4.1
 	*/
@@ -352,6 +352,18 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 		$default = $default['Basics']['copyright'];
 
 		echo get_theme_mod( 'wpmedium_copyright', $default );
+	}
+
+	/**
+	* Display Footer Sidebar.
+	* 
+	* @since    1.4.1
+	*/
+	function wpmedium_footer_sidebar_display() {
+		$default = wpmedium_default();
+		$default = $default['Basics']['footer_display'];
+
+		return get_theme_mod( 'wpmedium_footer_display', $default );
 	}
 
 	/** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
@@ -1177,7 +1189,8 @@ function wpmedium_default() {
 			'logo'             => get_template_directory_uri() . '/img/WPMedium-logo-simple-32.png',
 			'post_thumbnail'   => get_template_directory_uri() . '/img/wpmedium-post-thumbnail.jpg',
 			'copyright'        => sprintf( '&copy; %s &mdash; <a href="%s">%s</a>', date( 'Y' ), home_url(), get_bloginfo( 'name' ) ),
-			'credit'           => sprintf( '%s <a href="http://wordpress.org">WordPress</a> &mdash; %s <a href="http://www.caercam.org/wpmedium">WPMedium</a> %s <a href="http://www.caercam.org/">CaerCam</a>', __( 'Proudly Powered By', 'wpmedium' ), __( 'Theme', 'wpmedium' ), __( 'By', 'wpmedium' ) )
+			'credit'           => sprintf( '%s <a href="http://wordpress.org">WordPress</a> &mdash; %s <a href="http://www.caercam.org/wpmedium">WPMedium</a> %s <a href="http://www.caercam.org/">CaerCam</a>', __( 'Proudly Powered By', 'wpmedium' ), __( 'Theme', 'wpmedium' ), __( 'By', 'wpmedium' ) ),
+			'footer_display'   => 'none'
 		),
 		// Color theme
 		'Colors' => array(
@@ -1420,6 +1433,40 @@ function wpmedium_theme_customizer( $wp_customize ) {
 		)
 	);
 
+	/* Footer Section */
+	$wp_customize->add_section(
+		'wpmedium_footer_section',
+		array(
+			'title'       => __( 'Footer', 'wpmedium' ),
+			'priority'    => 90,
+			'description' => '',
+		)
+	);
+
+	/* Footer Display */
+	$wp_customize->add_setting(
+		'wpmedium_footer_display',
+		array(
+			'default'   => $options['Basics']['footer_display'],
+			'transport' => 'postMessage',
+		)
+	);
+
+	$wp_customize->add_control(
+		'wpmedium_footer_display',
+		array(
+			'label'   => 'Default Footer Display',
+			'section' => 'wpmedium_footer_section',
+			'type'    => 'select',
+			'choices'    => array(
+				'none'      => __( 'None', 'wpmedium' ),
+				'copyright' => __( 'Copyright & Credits', 'wpmedium' ),
+				'widget'    => __( 'Widget Area', 'wpmedium' ),
+				'both'      => __( 'Both', 'wpmedium' )
+			),
+		)
+	);
+
 	/* WPMedium Credits */
 	$wp_customize->add_setting(
 		'wpmedium_credits',
@@ -1434,7 +1481,7 @@ function wpmedium_theme_customizer( $wp_customize ) {
 		array(
 			'settings' => 'wpmedium_credits',
 			'label'    => __( 'WPMedium Credits Line', 'wpmedium' ),
-			'section'  => 'title_tagline',
+			'section'  => 'wpmedium_footer_section',
 			'type'     => 'text',
 		)
 	);
@@ -1453,7 +1500,7 @@ function wpmedium_theme_customizer( $wp_customize ) {
 		array(
 			'settings' => 'wpmedium_copyright',
 			'label'    => __( 'WPMedium Copyright Line', 'wpmedium' ),
-			'section'  => 'title_tagline',
+			'section'  => 'wpmedium_footer_section',
 			'type'     => 'text',
 		)
 	);

@@ -966,6 +966,17 @@ option {
     width: auto;
 }
 
+#single .footer-inner,
+#page .footer-inner {
+    width: 40em;
+}
+
+#single .footer-inner .widget,
+#page .footer-inner .widget {
+    margin: 1em 0.75em;
+    width: 18em;
+}
+
 /**
  * Archives template
  * categories, tags…
@@ -1358,8 +1369,24 @@ option {
         display: none !important;
     }
     
+    .footer-inner {
+        min-height: 2.5em;
+    }
+    
     .footer-inner .widget {
         margin: 1em 0;
+        width: 100%;
+    }
+    
+    .footer-credit,
+    .footer-copyright {
+        float: none !important;
+        margin: 0.5em 0;
+    }
+    
+    #single .footer-inner .widget,
+    #page .footer-inner .widget {
+        margin: 1em auto;
         width: 100%;
     }
 }
@@ -1377,9 +1404,13 @@ option {
     #main, 
     .site-menu,
     .site-categories,
-    .archive-menu,
-    .footer-inner {
+    .archive-menu {
         width: 98% !important;
+    }
+    
+    .footer-inner {
+        min-height: 2.5em;
+        width: 90% !important;
     }
     
     .site-menu, .archive-menu {
@@ -1442,6 +1473,7 @@ option {
     
     #single article,
     #page article {
+        margin: 0 auto !important;
         width: 90% !important;
     }
     
@@ -1522,8 +1554,24 @@ option {
         display: none !important;
     }
     
+    .footer-inner {
+        min-height: 2.5em;
+    }
+    
     .footer-inner .widget {
         margin: 1em 0;
+        width: 100%;
+    }
+    
+    .footer-credit,
+    .footer-copyright {
+        float: none !important;
+        margin: 0.5em 0;
+    }
+    
+    #single .footer-inner .widget,
+    #page .footer-inner .widget {
+        margin: 1em auto;
         width: 100%;
     }
 }
@@ -1683,8 +1731,24 @@ option {
         display: inline-block;
     }
     
+    .footer-inner {
+        min-height: 2.5em;
+    }
+    
     .footer-inner .widget {
         margin: 1em 0;
+        width: 100%;
+    }
+    
+    .footer-credit,
+    .footer-copyright {
+        float: none !important;
+        margin: 0.5em 0;
+    }
+    
+    #single .footer-inner .widget,
+    #page .footer-inner .widget {
+        margin: 1em auto;
         width: 100%;
     }
 }

@@ -20,7 +20,7 @@
 						
 <?php if ( get_the_tags() ) : ?>
 							<div class="entry-tags">
-								<?php wpmedium_the_taxonomy( __( 'This post also appears in', 'wpmedium' ), ', ', '' ); ?>
+								<?php wpmedium_the_taxonomy( sprintf( '%s ', __( 'This post also appears in', 'wpmedium' ) ), ', ', '' ); ?>
 							</div><!-- .entry-tags -->
 <?php endif; ?>
 						

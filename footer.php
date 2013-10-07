@@ -6,8 +6,9 @@
  */
 ?>
 
-<?php get_sidebar(); ?>
+<?php if ( 'widget' == wpmedium_footer_sidebar_display() || 'both' == wpmedium_footer_sidebar_display() ) { get_sidebar(); } ?>
 
+<?php if ( 'copyright' == wpmedium_footer_sidebar_display() || 'both' == wpmedium_footer_sidebar_display() ) : ?>
 			<footer id="mastfoot" class="site-footer">
 
 				<div class="footer-inner">
@@ -23,6 +24,7 @@
 				</div>
 
 			</footer><!-- #footer -->
+<?php endif; ?>
 
 		</div><!-- .site -->
 
