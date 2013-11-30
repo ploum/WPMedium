@@ -39,11 +39,13 @@
 								</div>
 								<div style="clear:both"></div>
 							</div><!-- .entry-author -->
-							
+
+                            <? if (comments_open()): ?>
 							<div class="entry-comment">
 								<a class="toggle-comments" id="show_comments" href="#comments"><?php _e( 'Show Comments', 'wpmedium' ); ?></a>
 								<a class="toggle-comments" id="hide_comments" href="#comments"><?php _e( 'Hide Comments', 'wpmedium' ); ?></a>
 								<?php comments_template(); ?>
 							</div>
+                            <?php endif; ?>
 						
 						</article>
