@@ -76,7 +76,7 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 		);
 
 		// Load settings or register new ones
-		wpmedium_settings();
+		$wpmedium_settings = wpmedium_settings();
 
 		add_action ( 'edit_category_form_fields', 'wpmedium_add_taxonomy_image' );
 		add_action ( 'edit_tag_form_fields', 'wpmedium_add_taxonomy_image' );
@@ -116,17 +116,23 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 			'logo'                       => get_template_directory_uri() . '/img/WPMedium-logo-simple-128.png',
 			'w'                          => get_template_directory_uri() . '/img/WPMedium-logo-simple-64.png',
 			'social' => array(
-				'facebook_profile'   => '',
-				'twitter_profile'    => '',
-				'google+_profile'    => '',
-				'flickr_profile'     => '',
-				'deviantart_profile' => '',
-				'blogger_profile'    => '',
-				'tumblr_profile'     => '',
-				'reddit_profile'     => '',
-				'lastfm_profile'     => '',
-				'vimeo_profile'      => '',
-				'youtube_profile'    => ''
+				'facebook_profile'   => array(
+					'link' => '',
+					'icon' => get_template_directory_uri() . '/img/icons/facebook.png'
+				),
+				'twitter_profile'    => array(
+					'link' => '',
+					'icon' => get_template_directory_uri() . '/img/icons/twitter.png'
+				),
+				'google+_profile'    => array(
+					'link' => '',
+					'icon' => get_template_directory_uri() . '/img/icons/google+.png'
+				),
+				'custom_profile_1'   => null,
+				'custom_profile_2'   => null,
+				'custom_profile_3'   => null,
+				'custom_profile_4'   => null,
+				'custom_profile_5'   => null
 			)
 		);
 
@@ -868,12 +874,12 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 		$ret = '';
 		$networks = get_option( 'wpmedium_social_options' );
 
-		if ( count( $networks ) > 0 ) {
-			foreach ( $networks as $network => $url ) {
-				if ( $url != '' )
-					$ret .= '<a href="'.esc_url( $url ) . '"><i class="'.str_replace( '_profile', '', $network ) . '" style="background-image:url('.get_template_directory_uri() . '/img/icons/picon_social/'.str_replace( '_profile', '', $network ) . '.png)"></i></a> ';
-			}
-		}
+		if ( empty( $networks ) )
+			return $ret;
+
+		foreach ( $networks as $network => $data )
+			if ( ! is_null( $data ) && isset( $data['link'] ) && '' != $data['link'] && isset( $data['icon'] ) && '' != $data['icon'] )
+				$ret .= '<a href="' . esc_url( $data['link'] ) . '"><img src="' . esc_url( $data['icon'] ) . '" alt="" width="24" height="24" /></a> ';
 
 		return $ret;
 	}
@@ -1079,44 +1085,12 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 				'_title'      => __( 'Facebook Profile', 'wpmedium' ),
 			),
 			array(
-			    '_id'         => 'twitter_profile',
-			    '_title'      => __( 'Twitter Profile', 'wpmedium' ),
+				'_id'         => 'twitter_profile',
+				'_title'      => __( 'Twitter Profile', 'wpmedium' ),
 			),
 			array(
-			    '_id'         => 'google+_profile',
-			    '_title'      => __( 'Google+ Profile', 'wpmedium' ),
-			),
-			array(
-			    '_id'         => 'flickr_profile',
-			    '_title'      => __( 'Flickr Profile', 'wpmedium' ),
-			),
-			array(
-			    '_id'         => 'deviantart_profile',
-			    '_title'      => __( 'DeviantArt Profile', 'wpmedium' ),
-			),
-			array(
-			    '_id'         => 'blogger_profile',
-			    '_title'      => __( 'Blogger Profile', 'wpmedium' ),
-			),
-			array(
-			    '_id'         => 'tumblr_profile',
-			    '_title'      => __( 'Tumblr Profile', 'wpmedium' ),
-			),
-			array(
-			    '_id'         => 'reddit_profile',
-			    '_title'      => __( 'Reddit Profile', 'wpmedium' ),
-			),
-			array(
-			    '_id'         => 'lastfm_profile',
-			    '_title'      => __( 'LastFm Profile', 'wpmedium' ),
-			),
-			array(
-			    '_id'         => 'vimeo_profile',
-			    '_title'      => __( 'Vimeo Profile', 'wpmedium' ),
-			),
-			array(
-			    '_id'         => 'youtube_profile',
-			    '_title'      => __( 'Youtube Profile', 'wpmedium' ),
+				'_id'         => 'google+_profile',
+				'_title'      => __( 'Google+ Profile', 'wpmedium' ),
 			)
 		);
 
@@ -1143,11 +1117,44 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 			);
 		}
 
+		register_setting(
+			'wpmedium_social_options',
+			'wpmedium_social_options'
+		);
+
+		add_settings_section(
+			'wpmedium_custom_social_settings_section',
+			__( 'Custom Social Networks', 'wpmedium' ),
+			'wpmedium_custom_social_networks_note',
+			'wpmedium_social_options'
+		);
+
+		for ( $i = 0; $i < 6; $i++ ) {
+			$id = $i + 1;
+			add_settings_field(
+				"custom_profile_$id",
+				sprintf( __( 'Custom Profile #%d', 'wpmedium' ), $id ),
+				'wpmedium_options_callback', 
+				'wpmedium_social_options',
+				'wpmedium_custom_social_settings_section',
+				array(
+					'id'    => "custom_profile_$id",
+					'title' => sprintf( __( 'Custom Profile #%d', 'wpmedium' ), $id )
+				)
+			);
+		}
+
 		register_setting(  
 			'wpmedium_social_options',
 			'wpmedium_social_options'
 		);
 
+	}
+
+	function wpmedium_custom_social_networks_note() {
+?>
+			<p><?php _e( 'WPMedium default social icons (Facebook, Twitter, Google+) are from the <strong></strong> icon set by Gentleface. You can download the set <a href="http://www.gentleface.com/free_icon_set.html">here</a>.', 'wpmedium' ); ?></p>
+<?php
 	}
 
 	/**
@@ -1158,11 +1165,19 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 	* @param string $section Option section to handle
 	*/
 	function wpmedium_options_callback( $section ) {
+
 		$default = wpmedium_settings();
-		$value   = get_option( 'wpmedium_social_options', $default['social'] );
-		$value   = $value[ $section['id'] ];
+		$value   = get_option( 'wpmedium_social_options' );
+
+		if ( ! $value || '' == $value )
+			$value = $default['social'];
+
+		$value   = ( isset( $value[ $section['id'] ] ) ? $value[ $section['id'] ] : '' );
+		$link    = ( isset( $value['link'] ) ? $value['link'] : '' );
+		$icon    = ( isset( $value['icon'] ) ? $value['icon'] : '' );
 ?>
-			<input type="text" id="<?php echo $section['id']; ?>" name="wpmedium_social_options[<?php echo $section['id']; ?>]" value="<?php echo esc_attr( $value ); ?>" style="background-image: url(<?php echo get_template_directory_uri(); ?>/img/icons/social_media/_social_<?php echo str_replace( '_profile', '', $section['id'] ); ?>.png);" />
+			<label><?php printf( '%s:', __( 'Profile Link', 'wpmedium' ) ); ?></label> <input type="text" id="<?php echo $section['id']; ?>" name="wpmedium_social_options[<?php echo $section['id']; ?>][link]" value="<?php echo esc_attr( $link ); ?>" size="42" /><br />
+			<label><?php printf( '%s:', __( 'Custom Icon', 'wpmedium' ) ); ?></label> <input type="text" id="<?php echo $section['id'] ?>" name="wpmedium_social_options[<?php echo $section['id'] ?>][icon]" value="<?php echo esc_attr( $icon ); ?>" size="42" />
 <?php
 	}
 
