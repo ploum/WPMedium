@@ -115,6 +115,7 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 			'default_post_thumbnail'     => get_template_directory_uri() . '/img/wpmedium-post-thumbnail.jpg',
 			'logo'                       => get_template_directory_uri() . '/img/WPMedium-logo-simple-128.png',
 			'w'                          => get_template_directory_uri() . '/img/WPMedium-logo-simple-64.png',
+			'use_fonts'                  => 'local',
 			'social' => array(
 				'facebook_profile'   => array(
 					'link' => '',
@@ -957,7 +958,29 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 		if ( get_theme_mod( 'wpmedium_footer_widgettitle' ) != '' )
 			echo '.footer-inner .widgettitle {color:'.get_theme_mod( 'wpmedium_footer_widgettitle' ) . ' !important;} ';
 
+		if ( wpmedium_use_local_font() ) {
+			echo "\n".'@font-face {font-family: "PT Serif";font-style: normal;font-weight: 400;src: local("PT Serif"), local("PTSerif-Regular"), url(http://themes.googleusercontent.com/static/fonts/ptserif/v5/sDRi4fY9bOiJUbgq53yZCfesZW2xOQ-xsNqO47m55DA.woff) format("woff");}';
+			echo "\n".'@font-face {font-family: "PT Sans Narrow";font-style: normal;font-weight: 400;src: local("PT Sans Narrow"), local("PTSans-Narrow"), url(http://themes.googleusercontent.com/static/fonts/ptsansnarrow/v4/UyYrYy3ltEffJV9QueSi4RdbPw3QSf9R-kE0EsQUn2A.woff) format("woff");}';
+		}
+
 		echo '    </style>'."\n";
+	}
+
+	/**
+	* Do we use the local Font files or do we use Google API?
+	* 
+	* @since    1.4.1
+	* 
+	* @return   boolean    True: local fonts, False: Google API
+	*/
+	function wpmedium_use_local_font() {
+
+		$default = wpmedium_settings();
+		$default = $default['use_fonts'];
+
+		$fonts = get_theme_mod( 'wpmedium_use_local_font', $default );
+
+		return ( 'local' == $fonts );
 	}
 
 	/**
@@ -966,6 +989,7 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 	* @since    1.1
 	*/
 	function wpmedium_wp_head_scripts() {
+
 		wp_register_script( 'wpmedium', get_template_directory_uri() . '/js/jquery.wpmedium.js', array( 'jquery' ) );
 
 		wp_enqueue_script( 'jquery' );
@@ -973,9 +997,14 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 		wp_enqueue_script( 'wpmedium' );
 
 		wp_localize_script( 'wpmedium', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'loadmore' => __( 'Load More', 'wpmedium' ) ) );
+
+		if ( ! wpmedium_use_local_font() ) {
+			wp_register_style( 'PT-Serif', 'http://fonts.googleapis.com/css?family=PT+Serif', array(), null, 'all' );
+			wp_register_style( 'PT-Sans-Narrow', 'http://fonts.googleapis.com/css?family=PT+Sans+Narrow', array(), null, 'all' );
+			wp_enqueue_style( 'PT-Serif' );
+			wp_enqueue_style( 'PT-Sans-Narrow' );
+		}
 	}
-
-
 
 	/**
 	* Add custom style to the theme options page
@@ -1167,7 +1196,7 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 	function wpmedium_options_callback( $section ) {
 
 		$default = wpmedium_settings();
-		$value   = get_option( 'wpmedium_social_options' );
+		$value   = get_option( 'wpmedium_social_options', $default['social'] );
 
 		if ( ! $value || '' == $value )
 			$value = $default['social'];
@@ -1423,6 +1452,28 @@ function wpmedium_theme_customizer( $wp_customize ) {
 			'label'    => __( 'Use Default Post Thumbnail', 'wpmedium' ),
 			'section'  => 'wpmedium_settings_section',
 			'type'     => 'checkbox',
+		)
+	);
+
+	/* Google Fonts API */
+	$wp_customize->add_setting(
+		'wpmedium_use_local_font',
+		array(
+			'default'   => 'local',
+			'transport' => 'postMessage',
+		)
+	);
+
+	$wp_customize->add_control(
+		'wpmedium_use_local_font',
+		array(
+			'label'   => 'Use Local Fonts',
+			'section' => 'wpmedium_settings_section',
+			'type'    => 'radio',
+			'choices'    => array(
+				'local' => __( 'Use local font files', 'wpmedium' ),
+				'g_api' => __( 'Google API Fonts', 'wpmedium' )
+			),
 		)
 	);
 
