@@ -18,10 +18,9 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 	 * 
 	 * @since    1.4
 	 */
-	function wpmedium_setup()
-	{
-		// Adds locales
-		load_theme_textdomain( 'wpmedium', get_template_directory() . '/lang' );
+	function wpmedium_setup() {
+
+		load_theme_textdomain( 'wpmedium', get_template_directory() . '/languages' );
 
 		// Adds RSS feed links to <head> for posts and comments.
 		add_theme_support( 'automatic-feed-links' );
@@ -62,12 +61,40 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 		if ( !isset( $content_width ) )
 			$content_width = 900;
 
+		// Load settings or register new ones
+		$wpmedium_settings = wpmedium_settings();
+
+		add_action( 'edit_category_form_fields', 'wpmedium_add_taxonomy_image' );
+		add_action( 'edit_tag_form_fields', 'wpmedium_add_taxonomy_image' );
+		add_action( 'edited_term', 'wpmedium_save_image' );
+
+		add_action( 'wp_enqueue_scripts', 'wpmedium_wp_head' );
+		add_action( 'admin_enqueue_scripts', 'wpmedium_admin_enqueue_scripts' );
+
+		add_action( 'admin_menu', 'wpmedium_theme_menu' );
+		add_action( 'admin_init', 'wpmedium_theme_initialize_options' ); 
+
+		add_action( 'wp_ajax_load_posts', 'wpmedium_ajax_load_posts' );
+		add_action( 'wp_ajax_no_priv_load_posts', 'wpmedium_ajax_load_posts' );
+
+		add_action( 'customize_register', 'wpmedium_theme_customizer' );
+
+		add_action( 'widgets_init', 'wpmedium_register_sidebars' );
+	}
+
+	/**
+	 * Add Sidebars
+	 *
+	 * @since    1.5
+	 */
+	function wpmedium_register_sidebars() {
+
 		// Add a sidebar to the header
 		register_sidebar(
 			array(
 				'name'          => __( 'Header Sidebar', 'wpmedium' ),
 				'id'            => 'header-sidebar',
-				'description'   => __( 'Header Sidebar help', 'wpmedium' ),
+				'description'   => __( 'Add Widgets to your blog\'s header. Useful to include a Flattr button for instance.', 'wpmedium' ),
 				'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 				'after_widget'  => '</aside>',
 				'before_title'  => '',
@@ -75,24 +102,19 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 			)
 		);
 
-		// Load settings or register new ones
-		$wpmedium_settings = wpmedium_settings();
-
-		add_action ( 'edit_category_form_fields', 'wpmedium_add_taxonomy_image' );
-		add_action ( 'edit_tag_form_fields', 'wpmedium_add_taxonomy_image' );
-		add_action ( 'edited_term', 'wpmedium_save_image' );
-
-		add_action( 'wp_enqueue_scripts', 'wpmedium_wp_head' );
-		add_action( 'admin_enqueue_scripts', 'wpmedium_admin_enqueue_scripts' );
-
-		add_action( 'admin_menu', 'wpmedium_theme_menu' );
-		add_action( 'admin_menu', 'wpmedium_customizer_menu_item' );
-		add_action( 'admin_init', 'wpmedium_theme_initialize_options' ); 
-
-		add_action( 'wp_ajax_load_posts', 'wpmedium_ajax_load_posts' );
-		add_action( 'wp_ajax_no_priv_load_posts', 'wpmedium_ajax_load_posts' );
-
-		add_action( 'customize_register', 'wpmedium_theme_customizer' );
+		// Footer sidebar
+		register_sidebar(
+			array(
+				'name'          => __( 'Footer Sidebar', 'wpmedium' ),
+				'id'            => 'footer-sidebar',
+				'description'   => __( 'Add Widgets to your Blog Footer. You need to activate the Widget Zone in the Footer section of the Theme Customizer.', 'wpmedium' ),
+				'class'         => '',
+				'before_widget' => '<li id="%1$s" class="widget %2$s">',
+				'after_widget'  => '</li>',
+				'before_title'  => '<h2 class="widgettitle">',
+				'after_title'   => '</h2>'
+			)
+		);
 	}
 
 	/**
@@ -626,64 +648,6 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 		echo wpmedium_get_the_taxonomy_image();
 	}
 
-	/**
-	* Add custom images to display along with category description and title
-	* selection/upload using WP media-upload
-	* 
-	* @since    1.0
-	*
-	* @param    string        $taxonomy 
-	*/
-	function wpmedium_add_taxonomy_image( $taxonomy ) {
-
-		/*$taxonomy_images = get_option( 'wpmedium_taxonomy_images' );
-		$taxonomy_image = '';
-
-		if ( is_array( $taxonomy_images ) && array_key_exists( $taxonomy->term_id, $taxonomy_images ) )
-			$taxonomy_image = $taxonomy_images[ $taxonomy->term_id ] ;
-
-		if ( '' != $taxonomy_image )
-			$style = 'style="width: 100px;"';
-		else
-			$style = 'style="display:none;width: 100px;"';
-	?>
-		<table class="form-table">
-			<tr class="form-field form-required">
-				<th scope="row" valign="top">
-					<label for="auteur_revue_image"><?php _e( 'Taxonomy Image', 'wpmedium' ); ?></label>
-				</th>
-				<td>
-					<div id="upload_taxonomy_image_preview" style="">
-	<?php ?>
-	<?php if ( '' != $taxonomy_image ) { ?>
-						<img style="max-width:100%;" src="<?php echo $taxonomy_image; ?>" />
-	<?php } ?>
-					</div>
-					
-					<input type="hidden" id="wpmedium_taxonomy_image" name="wpmedium_taxonomy_image" value="<?php echo $taxonomy_image; ?>" class="image_url" />
-					<input id="upload_taxonomy_image" type="button" class="button-primary" value="<?php _e( 'Upload Image', 'wpmedium' ); ?>" style="width: 100px;" />
-					<input id="delete_taxonomy_image" name="wpmedium_taxonomy_image_delete" type="submit" class="button-primary" value="<?php _e( 'Delete Image', 'wpmedium' ); ?>" <?php echo $style; ?> />
-					<p class="description"><?php _e( 'Taxonomy Image Help', 'wpmedium' ); ?></p>
-				</td>
-			</tr>
-	<?php */
-	}
-
-	/**
-	* Save previously selected custom category images
-	* 
-	* @since    1.0
-	*
-	* @param    int        $term_id taxonomy ID.
-	*/
-	function wpmedium_save_image( $term_id ){
-		/*if ( isset( $_POST['wpmedium_taxonomy_image'] ) ) {
-			$taxonomy_images = get_option( 'wpmedium_taxonomy_images' );
-			$taxonomy_images[$term_id] = $_POST['wpmedium_taxonomy_image'];
-			update_option( 'wpmedium_taxonomy_images', $taxonomy_images );
-		}*/
-	}
-
 	/** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 	*
 	*                    WPMedium Menus & Pagination
@@ -1182,7 +1146,7 @@ add_action( 'after_setup_theme', 'wpmedium_setup' );
 
 	function wpmedium_custom_social_networks_note() {
 ?>
-			<p><?php _e( 'WPMedium default social icons (Facebook, Twitter, Google+) are from the <strong></strong> icon set by Gentleface. You can download the set <a href="http://www.gentleface.com/free_icon_set.html">here</a>.', 'wpmedium' ); ?></p>
+			<p><?php _e( 'WPMedium default social icons (Facebook, Twitter, Google+) are from the <strong>Gentleface Toolbar Icon Set</strong> icon set by Gentleface. You can download the set <a href="http://www.gentleface.com/free_icon_set.html">here</a>.', 'wpmedium' ); ?></p>
 <?php
 	}
 
@@ -1301,16 +1265,6 @@ function wpmedium_default() {
 	);
 
 	return $defaults;
-}
-
-
-/**
- * Add a menu item for the theme customizer
- *
- * @since    1.4
- */
-function wpmedium_customizer_menu_item() {
-	add_theme_page( __( 'Customize' ), __( 'Customize' ), 'edit_theme_options', 'customize.php' );
 }
 
 
