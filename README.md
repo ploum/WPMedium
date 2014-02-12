@@ -28,6 +28,14 @@ Disclaimer:
 Changelog:
 ----------
 
+* 1.5
+ * Languages update (English, French)
+ * Custom Header
+ * Custom Background
+ * Custom Social Networks
+ * Fonts source selection (local or Google API)
+ * Bug fix: Comment block not displayed when comments are disabled
+
 * 1.4
   * Switching to Customize API
   * AJAX Posts load
