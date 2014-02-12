@@ -203,7 +203,7 @@ option {
 
 .site-header {
     background-position: center top;
-    background-size: 100%;
+    background-size: cover;
     height: 16.250em;
     padding: 5.0em 1.250em;
     text-align: center;

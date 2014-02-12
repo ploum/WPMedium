@@ -8,7 +8,7 @@ get_header(); ?>
     
 		<div id="home" class="hfeed site">
 
-			<header id="masthead" class="site-header" role="banner" style="background-image:url(<?php wpmedium_the_header_image(); ?>);">
+			<header id="masthead" class="site-header" role="banner" style="background-image:url(<?php header_image(); ?>);">
 
 				<div class="site-header-overlay"></div>
 
