@@ -102,7 +102,7 @@
 		add_action( 'admin_init', 'wpmedium_theme_initialize_options' ); 
 
 		add_action( 'wp_ajax_load_posts', 'wpmedium_ajax_load_posts' );
-		add_action( 'wp_ajax_no_priv_load_posts', 'wpmedium_ajax_load_posts' );
+		add_action( 'wp_ajax_nopriv_load_posts', 'wpmedium_ajax_load_posts' );
 
 		add_action( 'customize_register', 'wpmedium_theme_customizer' );
 
