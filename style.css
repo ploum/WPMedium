@@ -481,18 +481,21 @@ option {
     text-align: center;
 }
 
-#loadmore,  #loadmore:hover {
+#loadmore a,
+#loadmore a:hover,
+#loadmore:hover a {
     -webkit-transition: all 0.3s ease;
        -moz-transition: all 0.3s ease;
          -o-transition: all 0.3s ease;
             transition: all 0.3s ease;
 }
-#loadmore:hover {
+#loadmore:hover a,
+#loadmore a:hover {
     background: #666;
     color: white;
     text-decoration: none;
 }
-#loadmore {
+#loadmore a {
     background: #424242;
     border-radius: 0.3em;
     color: #ccc;

@@ -1,4 +1,4 @@
-jQuery(window).load(function($) {
+jQuery(window).load(function() {
 	
 	var responsive_menu = function() {
 		if ( jQuery(window).width() < 760 ) {
@@ -58,28 +58,33 @@ jQuery(window).load(function($) {
 		responsive_menu();
 	});
 
-	jQuery('#loadmore').click(function(e) {
+	jQuery('#loadmore > a').on('click', function(e) {
 		e.preventDefault();
+		ajax_load( this.href );
+	});
+
+	var ajax_load = function( href ) {
 		jQuery.ajax({
 			type: 'GET',
-			url: ajax_object.ajax_url,
-			data: {
-				action: 'load_posts',
-				offset: jQuery('#content .hentry').length
-			},
-			success: function(response) {
+			url: href,
+			success: function( response ) {
 				if ( '' != response ) {
-					jQuery('#content').append(response);
+					var helper = document.createElement('div');
+					    helper = jQuery( helper );
+					    helper.html( response );
+					var content = jQuery('#content .hentry', helper);
+					var newlink = jQuery('#loadmore a', helper);
+					jQuery('#content').append( content );
+					jQuery('#loadmore a').attr( 'href', jQuery(newlink).attr('href') );
+					jQuery('#loadmore a').html( jQuery(newlink).html() );
+					helper.remove();
 					jQuery('#content').masonry('reload');
 				}
 			},
 			beforeSend: function() {
-				jQuery('#loadmore').text('...');
-			},
-			complete: function() {
-				jQuery('#loadmore').text(ajax_object.loadmore);
-			},
+				jQuery('#loadmore > a').text('...');
+			}
 		});
-	});
+	};
 	
 });

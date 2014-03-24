@@ -1028,7 +1028,7 @@
 	 * @return   string      HTML formatted links
 	 */
 	function wpmedium_get_nav_link() {
-		return ( wpmedium_o( 'ajax_load' ) ? '<a id="loadmore" href="#">' . __( 'Load More', 'wpmedium' ) . '</a>' : posts_nav_link( ' &#183; ', sprintf( '<span class="pagination-left">%s</span>', __( 'Prev page', 'wpmedium' ) ), sprintf( '<span class="pagination-right">%s</span>', __( 'Next page', 'wpmedium' ) ) ) );
+		return ( wpmedium_o( 'ajax_load' ) ? '<span id="loadmore">' . get_next_posts_link( __( 'Load More', 'wpmedium' ) ) . '</span>' : posts_nav_link( ' &#183; ', sprintf( '<span class="pagination-left">%s</span>', __( 'Prev page', 'wpmedium' ) ), sprintf( '<span class="pagination-right">%s</span>', __( 'Next page', 'wpmedium' ) ) ) );
 	}
 
 	/**
@@ -1144,15 +1144,19 @@
 		$offset = ( isset( $_GET['offset'] ) && '' != $_GET['offset'] ? $_GET['offset'] : 0 );
 		$html = '';
 
-		$query = new WP_Query(
-			array(
-				'offset' => $offset
-			)
-		);
+		query_posts( "offset=$offset" );
 
-		if ( $query->have_posts() ) {
-			while ( $query->have_posts() ) {
-				$query->the_post();
+// 		$query = new WP_Query(
+// 			array(
+// 				'offset' => $offset
+// 			)
+// 		);
+// 		print_r( $query );
+// 		die();
+
+		if ( have_posts() ) {
+			while ( have_posts() ) {
+				the_post();
 				get_template_part( 'content', get_post_format() );
 			}
 		}
