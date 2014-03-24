@@ -99,10 +99,7 @@
 		add_action( 'admin_enqueue_scripts', 'wpmedium_admin_enqueue_scripts' );
 
 		add_action( 'admin_menu', 'wpmedium_theme_menu' );
-		add_action( 'admin_init', 'wpmedium_theme_initialize_options' ); 
-
-		add_action( 'wp_ajax_load_posts', 'wpmedium_ajax_load_posts' );
-		add_action( 'wp_ajax_nopriv_load_posts', 'wpmedium_ajax_load_posts' );
+		add_action( 'admin_init', 'wpmedium_theme_initialize_options' );
 
 		add_action( 'customize_register', 'wpmedium_theme_customizer' );
 
@@ -1138,32 +1135,11 @@
 	 * back to 0.
 	 * 
 	 * @since    1.4
+	 * 
+	 * @deprecated 1.5.1
 	 */
 	function wpmedium_ajax_load_posts() {
-
-		$offset = ( isset( $_GET['offset'] ) && '' != $_GET['offset'] ? $_GET['offset'] : 0 );
-		$html = '';
-
-		query_posts( "offset=$offset" );
-
-// 		$query = new WP_Query(
-// 			array(
-// 				'offset' => $offset
-// 			)
-// 		);
-// 		print_r( $query );
-// 		die();
-
-		if ( have_posts() ) {
-			while ( have_posts() ) {
-				the_post();
-				get_template_part( 'content', get_post_format() );
-			}
-		}
-
-		wp_reset_postdata();
-
-		die();
+		return false;
 	}
 
 	/** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
