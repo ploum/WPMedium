@@ -371,7 +371,7 @@ option {
 .site-menu a {
     border-right: 1px solid rgba(0,0,0,0.3);
     border-left: 1px solid rgba(255, 255, 255, 0.1);
-    color: #ccc !important;
+    color: #ccc;
     display: block;
     float: left;
     font-size: 1em;
@@ -383,7 +383,7 @@ option {
 .site-menu a.active,
 .site-menu a:hover {
     background: rgba(255, 255, 255, 0.2);
-    color: #fff !important;
+    color: #fff;
     text-decoration: none;
     text-shadow: 0 1px 0 #222;
 }
@@ -760,11 +760,11 @@ option {
 }
 
 .entry-header .entry-title a {
-    color: #444 !important;
+    color: #444;
 }
 
 .entry-header .entry-title a:hover {
-    color: #45568c !important;
+    color: #45568c;
 }
 
 .entry-header-image, .entry-header img {
