@@ -1,10 +1,10 @@
-# Copyright (C) 2014 
-# This file is distributed under the same license as the  package.
+# Copyright (C) 2014 Charlie MERLAND
+# This file is distributed under the GNU GPL V3.
 msgid ""
 msgstr ""
-"Project-Id-Version:  \n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/WPMedium\n"
-"POT-Creation-Date: 2014-02-12 15:56:19+00:00\n"
+"Project-Id-Version: WPMedium 1.5\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tags/WPMedium\n"
+"POT-Creation-Date: 2014-05-21 09:55:22+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,11 +22,11 @@ msgstr[1] ""
 msgid "Posted On %s %s"
 msgstr ""
 
-#: archive.php:43 functions.php:1031
+#: archive.php:43 functions.php:1042
 msgid "Prev page"
 msgstr ""
 
-#: archive.php:43 functions.php:1031
+#: archive.php:43 functions.php:1042
 msgid "Next page"
 msgstr ""
 
@@ -97,7 +97,7 @@ msgstr ""
 msgid "This post also appears in"
 msgstr ""
 
-#: functions.php:38 functions.php:136
+#: functions.php:38 functions.php:133
 msgid "Footer Sidebar"
 msgstr ""
 
@@ -110,75 +110,79 @@ msgctxt "header image description"
 msgid "WPMedium"
 msgstr ""
 
-#: functions.php:123
+#: functions.php:120
 msgid "Header Sidebar"
 msgstr ""
 
-#: functions.php:125
+#: functions.php:122
 msgid ""
 "Add Widgets to your blog's header. Useful to include a Flattr button for "
 "instance."
 msgstr ""
 
-#: functions.php:138
+#: functions.php:135
 msgid ""
 "Add Widgets to your Blog Footer. You need to activate the Widget Zone in the "
 "Footer section of the Theme Customizer."
 msgstr ""
 
-#: functions.php:361 functions.php:1031
+#: functions.php:361 functions.php:1042
 msgid "Load More"
 msgstr ""
 
-#: functions.php:609
+#: functions.php:613
 msgid "By %s"
 msgstr ""
 
-#: functions.php:615
+#: functions.php:619
 msgid "In"
 msgstr ""
 
-#: functions.php:618
+#: functions.php:622
 msgid "Edit"
 msgstr ""
 
-#: functions.php:967 functions.php:971 functions.php:1000 functions.php:1004
+#: functions.php:978 functions.php:982 functions.php:1011 functions.php:1015
 msgid "Newest"
 msgstr ""
 
-#: functions.php:968 functions.php:972 functions.php:1001 functions.php:1005
+#: functions.php:979 functions.php:983 functions.php:1012 functions.php:1016
 msgid "Oldest"
 msgstr ""
 
-#: functions.php:1203
+#: functions.php:1085 functions.php:1098
+msgid "Permalink for &laquo; %s &raquo;"
+msgstr ""
+
+#: functions.php:1258
 msgid "WPMedium Theme Options"
 msgstr ""
 
-#: functions.php:1231
+#: functions.php:1286
 msgid "Facebook Profile"
 msgstr ""
 
-#: functions.php:1235
+#: functions.php:1290
 msgid "Twitter Profile"
 msgstr ""
 
-#: functions.php:1239
+#: functions.php:1294
 msgid "Google+ Profile"
 msgstr ""
 
-#: functions.php:1247
+#: functions.php:1302
 msgid "Social Settings"
 msgstr ""
 
-#: functions.php:1273
+#: functions.php:1328
 msgid "Custom Social Networks"
 msgstr ""
 
-#: functions.php:1282 functions.php:1288
+#: functions.php:1337 functions.php:1343
 msgid "Custom Profile #%d"
 msgstr ""
 
-#: functions.php:1302
+#: functions.php:1357
 msgid ""
 "WPMedium default social icons (Facebook, Twitter, Google+) are from the "
 "<strong>Gentleface Toolbar Icon Set</strong> icon set by Gentleface. You can "
@@ -186,142 +190,180 @@ msgid ""
 "\">here</a>."
 msgstr ""
 
-#: functions.php:1325
+#: functions.php:1380
 msgid "Profile Link"
 msgstr ""
 
-#: functions.php:1326
+#: functions.php:1381
 msgid "Custom Icon"
 msgstr ""
 
-#: functions.php:1353
+#: functions.php:1408
 msgid "Proudly Powered By"
 msgstr ""
 
-#: functions.php:1353
+#: functions.php:1408
 msgid "Theme"
 msgstr ""
 
-#: functions.php:1353
+#: functions.php:1408
 msgid "By"
 msgstr ""
 
-#: functions.php:1360
+#: functions.php:1415
 msgid "W Background Color"
 msgstr ""
 
-#: functions.php:1364
+#: functions.php:1419
 msgid "Text Color"
 msgstr ""
 
-#: functions.php:1368
+#: functions.php:1423
 msgid "Header Overlay Color"
 msgstr ""
 
-#: functions.php:1372
+#: functions.php:1427
 msgid "Header Sidebar Color"
 msgstr ""
 
-#: functions.php:1377
+#: functions.php:1432
 msgid "Title Color"
 msgstr ""
 
-#: functions.php:1378
+#: functions.php:1433
 msgid "Title Hover Color"
 msgstr ""
 
-#: functions.php:1383
+#: functions.php:1437
+msgid "Site Menu Background Color"
+msgstr ""
+
+#: functions.php:1442
 msgid "Link Color"
 msgstr ""
 
-#: functions.php:1384
+#: functions.php:1443
 msgid "Link Hover Color"
 msgstr ""
 
-#: functions.php:1388
+#: functions.php:1447
 msgid "Footer Text Color"
 msgstr ""
 
-#: functions.php:1392
+#: functions.php:1451
 msgid "Footer Background Color"
 msgstr ""
 
-#: functions.php:1396
+#: functions.php:1455
 msgid "Footer Titles Color"
 msgstr ""
 
-#: functions.php:1403
+#: functions.php:1462
 msgid "Logo"
 msgstr ""
 
-#: functions.php:1407
+#: functions.php:1466
 msgid "W Image"
 msgstr ""
 
-#: functions.php:1411
+#: functions.php:1470
 msgid "Default Post Thumbnail"
 msgstr ""
 
-#: functions.php:1481
+#: functions.php:1540
 msgid "Images"
 msgstr ""
 
-#: functions.php:1517
+#. #-#-#-#-#  WPMedium.pot (WPMedium 1.5)  #-#-#-#-#
+#. Theme Name of the plugin/theme
+#: functions.php:1576
 msgid "WPMedium"
 msgstr ""
 
-#: functions.php:1536
+#: functions.php:1595
 msgid "AJAX Posts Load"
 msgstr ""
 
-#: functions.php:1555
+#: functions.php:1614
 msgid "Use Default Post Thumbnail"
 msgstr ""
 
-#: functions.php:1577
+#: functions.php:1636
 msgid "Use local font files"
 msgstr ""
 
-#: functions.php:1578
+#: functions.php:1637
 msgid "Google API Fonts"
 msgstr ""
 
-#: functions.php:1599
+#: functions.php:1658
 msgid "Category"
 msgstr ""
 
-#: functions.php:1600
+#: functions.php:1659
 msgid "Post Tag"
 msgstr ""
 
-#: functions.php:1609
+#: functions.php:1668
 msgid "Footer"
 msgstr ""
 
-#: functions.php:1631
+#: functions.php:1690
 msgid "None"
 msgstr ""
 
-#: functions.php:1632
+#: functions.php:1691
 msgid "Copyright & Credits"
 msgstr ""
 
-#: functions.php:1633
+#: functions.php:1692
 msgid "Widget Area"
 msgstr ""
 
-#: functions.php:1634
+#: functions.php:1693
 msgid "Both"
 msgstr ""
 
-#: functions.php:1652
+#: functions.php:1711
 msgid "WPMedium Credits Line"
 msgstr ""
 
-#: functions.php:1671
+#: functions.php:1730
 msgid "WPMedium Copyright Line"
+msgstr ""
+
+#: functions.php:1749
+msgid "Previous/Next Post links"
+msgstr ""
+
+#: functions.php:1753
+msgid "Small"
+msgstr ""
+
+#: functions.php:1754
+msgid "Large"
+msgstr ""
+
+#: functions.php:1755
+msgid "Full"
 msgstr ""
 
 #: searchform.php:5
 msgid "Search"
+msgstr ""
+
+#. Theme URI of the plugin/theme
+msgid "http://www.caercam.org/wpmedium"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Clean and simple Medium like WordPress theme"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Charlie MERLAND"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.caercam.org/"
 msgstr ""
