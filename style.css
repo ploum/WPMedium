@@ -28,28 +28,28 @@ body {
 
 ol,
 ul {
-	list-style: none;
+    list-style: none;
 }
 blockquote,
 q {
-	quotes: none;
+    quotes: none;
 }
 blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-	content: '';
-	content: none;
+    content: '';
+    content: none;
 }
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 caption,
 th,
 td {
-	font-weight: normal;
-	text-align: left;
+    font-weight: normal;
+    text-align: left;
 }
 h1,
 h2,
@@ -57,16 +57,16 @@ h3,
 h4,
 h5,
 h6 {
-	clear: both;
+    clear: both;
 }
 html {
-	overflow-y: scroll;
-	font-size: 100%;
-	-webkit-text-size-adjust: 100%;
-	-ms-text-size-adjust: 100%;
+    overflow-y: scroll;
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
 }
 a:focus {
-	outline: thin dotted;
+    outline: thin dotted;
 }
 article,
 aside,
@@ -78,49 +78,49 @@ header,
 hgroup,
 nav,
 section {
-	display: block;
+    display: block;
 }
 audio,
 canvas,
 video {
-	display: inline-block;
+    display: inline-block;
 }
 audio:not([controls]) {
-	display: none;
+    display: none;
 }
 del {
-	color: #333;
+    color: #333;
 }
 ins {
-	background: #fff9c0;
-	text-decoration: none;
+    background: #fff9c0;
+    text-decoration: none;
 }
 hr {
-	background-color: #ccc;
-	border: 0;
-	height: 1px;
-	margin: 24px;
-	margin-bottom: 1.714285714rem;
+    background-color: #ccc;
+    border: 0;
+    height: 1px;
+    margin: 24px;
+    margin-bottom: 1.714285714rem;
 }
 sub,
 sup {
-	font-size: 75%;
-	line-height: 0;
-	position: relative;
-	vertical-align: baseline;
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
 }
 sup {
-	top: -0.5em;
+    top: -0.5em;
 }
 sub {
-	bottom: -0.25em;
+    bottom: -0.25em;
 }
 small {
-	font-size: smaller;
+    font-size: smaller;
 }
 img {
-	border: 0;
-	-ms-interpolation-mode: bicubic;
+    border: 0;
+    -ms-interpolation-mode: bicubic;
 }
 
 a {
@@ -563,6 +563,137 @@ option {
 .site-content article.no-thumbnail .entry-header-image {
     height: auto;
     min-height: auto;
+}
+
+.post-nav {
+    background-color: #eee;
+}
+
+.post-nav::after {
+    clear: both;
+    content: ' ';
+    clear: both;
+    position: absolute;
+}
+
+/*
+ * Prev/Next Post Nav full
+ */
+
+.post-nav.full .container {
+    width: 100%;
+}
+
+.post-nav.full a,
+.post-nav.large a {
+    background-color: #fff;
+    color: #fff;
+    display: inline-block;
+    font-weight: 900;
+    height: 22em;
+    line-height: 22em;
+    min-height: 6em;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    width: 50%;
+}
+
+.post-nav.full a div,
+.post-nav.large a div {
+    background-color: #fff;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    opacity: 0.35;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 0;
+}
+
+.post-nav.full a:hover,
+.post-nav.large a:hover {
+    background-color: #000;
+}
+
+.post-nav.full a:hover div,
+.post-nav.large a:hover div {
+    opacity: 0.5;
+}
+
+.post-nav.full a span,
+.post-nav.large a span {
+    border: 2px solid #fff;
+    border-radius: 0.25em;
+    display: inline-block;
+    line-height: 1em;
+    padding: 0.75em 1.5em;
+    position: relative;
+    z-index: 1;
+}
+
+.post-nav.full a:hover span,
+.post-nav.large a:hover span {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.post-nav.full a + a div,
+.post-nav.large a + a div {
+    left: 0;
+    top: 0;
+}
+
+/*
+ * Prev/Next Post Nav large
+ */
+
+.post-nav.large .container {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.post-nav.large a {
+    height: 8em;
+    line-height: 8em;
+    max-width: 20em;
+    min-height: 6em;
+    left: 0;
+}
+
+.post-nav.large a + a {
+    float: right;
+}
+
+.post-nav.large a img {
+    height: auto;
+}
+
+/*
+ * Prev/Next Post Nav small
+ */
+
+.post-nav.small {
+    margin: 0 auto;
+    width: 40em;
+}
+
+.post-nav.small a {
+    display: inline-block;
+    max-width: 20em;
+}
+
+.post-nav.small a + a {
+    float: right;
+}
+
+.post-nav.small a span {
+    display: inline-block;
+    margin: 1em;
+    padding: 0.25em 0.5em;
 }
 
 .footer-sidebar {
@@ -1103,7 +1234,7 @@ option {
 
 #archive .entry-header,
 #home .entry-header {
-	
+        
 }
 
 #archive .entry-header-image,
@@ -1173,7 +1304,7 @@ option {
     }
     
     article.sticky .entry-header img {
-	height: auto;
+        height: auto;
         width: 100% !important;
     }
     
@@ -1200,6 +1331,7 @@ option {
     .site-menu,
     .site-categories,
     .archive-menu,
+    .post-nav.small,
     .footer-inner {
         width: 48em !important;
     }
@@ -1372,6 +1504,27 @@ option {
         display: none !important;
     }
     
+    .post-nav.small,
+    .post-nav.large,
+    .post-nav.full {
+        width: 100% !important;
+    }
+    
+    .post-nav.small a,
+    .post-nav.large a,
+    .post-nav.full a {
+        line-height: 6em;
+        max-height: 6em;
+        max-width: none !important;
+        text-align: center !important;
+        width: 100% !important;
+    }
+    
+    .post-nav.large a img,
+    .post-nav.full a img {
+        height: auto;
+    }
+    
     .footer-inner {
         min-height: 2.5em;
     }
@@ -1414,6 +1567,27 @@ option {
     .footer-inner {
         min-height: 2.5em;
         width: 90% !important;
+    }
+    
+    .post-nav.small,
+    .post-nav.large,
+    .post-nav.full {
+        width: 100% !important;
+    }
+    
+    .post-nav.small a,
+    .post-nav.large a,
+    .post-nav.full a {
+        line-height: 6em;
+        max-height: 6em;
+        max-width: none !important;
+        text-align: center !important;
+        width: 100% !important;
+    }
+    
+    .post-nav.large a img,
+    .post-nav.full a img {
+        height: auto;
     }
     
     .site-menu, .archive-menu {
@@ -1599,6 +1773,27 @@ option {
     .archive-menu,
     .footer-inner {
         width: 90% !important;
+    }
+    
+    .post-nav.small,
+    .post-nav.large,
+    .post-nav.full {
+        width: 100% !important;
+    }
+    
+    .post-nav.small a,
+    .post-nav.large a,
+    .post-nav.full a {
+        line-height: 6em;
+        max-height: 6em;
+        max-width: none !important;
+        text-align: center !important;
+        width: 100% !important;
+    }
+    
+    .post-nav.large a img,
+    .post-nav.full a img {
+        height: auto;
     }
     
     .site-categories a {

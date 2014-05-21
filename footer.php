@@ -6,6 +6,10 @@
  */
 ?>
 
+<?php if ( is_single() ) : ?>
+			<?php wpmedium_post_nav_links(); ?>
+<?php endif; ?>
+
 <?php if ( 'widget' == wpmedium_footer_sidebar_display() || 'both' == wpmedium_footer_sidebar_display() ) { get_sidebar(); } ?>
 
 <?php if ( 'copyright' == wpmedium_footer_sidebar_display() || 'both' == wpmedium_footer_sidebar_display() ) : ?>

@@ -405,6 +405,7 @@
 			'logo'                       => get_template_directory_uri() . '/img/WPMedium-logo-simple-128.png',
 			'w'                          => get_template_directory_uri() . '/img/WPMedium-logo-simple-64.png',
 			'use_fonts'                  => 'local',
+			'post_links'                 => 'small',
 			'social' => array(
 				'facebook_profile'   => array(
 					'link' => '',
@@ -463,7 +464,10 @@
 	function wpmedium_o( $search = '', $value = null ) {
 
 		$default   = wpmedium_settings();
-		$theme_mod = get_theme_mod( 'wpmedium_' . $search, $default[ $search ] );
+		$theme_mod = '';
+
+		if ( isset( $default[ $search ] ) )
+			$theme_mod = get_theme_mod( 'wpmedium_' . $search, $default[ $search ] );
 
 		if ( '' !== $theme_mod )
 			return $theme_mod;
@@ -678,7 +682,7 @@
 	 * 
 	 * @return   string    Post's thumbnail HTML code.
 	 */
-	function wpmedium_get_post_thumbnail( $post_id = 0, $size = 'large-featured-image' ) {
+	function wpmedium_get_post_thumbnail( $post_id = 0, $size = 'large-featured-image', $html = true ) {
 
 		if ( !$post_id ) {
 			global $post;
@@ -688,6 +692,9 @@
 		if ( has_post_thumbnail( $post_id ) ) {
 
 			$attachment = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size );
+
+			if ( false === $html )
+				return $attachment[0];
 
 			if ( $attachment[1] > $attachment[2] ) {
 				if ( $attachment[1] / ( $attachment[2] / 245 ) < 370 )
@@ -703,6 +710,10 @@
 			$ret = '<img src="'.$attachment[0].'" alt="'.get_the_title( $post_id ) . '" class="attachment-post-thumbnail wp-post-image '.$class.'" />';
 		}
 		else if ( wpmedium_o( 'use_post_thumbnail' ) && '' != wpmedium_o( 'default_post_thumbnail' ) ) {
+
+			if ( false === $html )
+				return esc_url( wpmedium_o( 'default_post_thumbnail' ) );
+
 			$ret = '<img src="'.esc_url( wpmedium_o( 'default_post_thumbnail' ) ) . '" alt="'.get_the_title( $post_id ) . '" class="attachment-post-thumbnail wp-post-image default" />';
 		}
 		else {
@@ -1029,7 +1040,7 @@
 	}
 
 	/**
-	 * Display custome Post nav_links.
+	 * Display custom Post nav_links.
 	 * 
 	 * @since    1.4
 	 * 
@@ -1037,6 +1048,67 @@
 	 */
 	function wpmedium_nav_link() {
 		echo wpmedium_get_nav_link();
+	}
+
+	/**
+	 * Previous/Next Post links.
+	 * 
+	 * Three posibilities: small (simple links), large (semi transparent post
+	 * thumbnail in background, limited width) or full (50% screen width)
+	 * 
+	 * @since    1.5.2
+	 * 
+	 * @return   string      HTML formatted links
+	 */
+	function wpmedium_get_post_nav_links() {
+
+		$links = array();
+		$style = wpmedium_o( 'post_links' );
+		$style = in_array( $style, array( 'small', 'large', 'full' ) ) ? $style : 'small';
+
+		$prev = get_adjacent_post( $in_same_term = false, $excluded_terms = '', $previous = true, $taxonomy = 'category' );
+		$next = get_adjacent_post( $in_same_term = false, $excluded_terms = '', $previous = false, $taxonomy = 'category' );
+
+		if ( is_object( $prev ) ) {
+			$title = apply_filters( 'the_title', $prev->post_title );
+			$link  = get_permalink( $prev->ID );
+			$thumbnail = '';
+
+			if ( 'large' == $style || 'full' == $style ) {
+				$thumbnail = wpmedium_get_post_thumbnail( $prev->ID, $size = 'large-featured-image', $html = false );
+				$thumbnail = '<div style="background-image: url(' . $thumbnail . ')"></div>';
+			}
+
+			$links[] = sprintf( '<a href="%s" title="%s">%s<span>&laquo; %s</span></a>', $link, sprintf( __( 'Permalink for &laquo; %s &raquo;', 'wpmedium' ), strip_tags( $title ) ), $thumbnail, $title );
+		}
+
+		if ( is_object( $next ) ) {
+			$title = apply_filters( 'the_title', $next->post_title );
+			$link  = get_permalink( $next->ID );
+			$thumbnail = '';
+
+			if ( 'large' == $style || 'full' == $style ) {
+				$thumbnail = wpmedium_get_post_thumbnail( $next->ID, $size = 'large-featured-image', $html = false );
+				$thumbnail = '<div style="background-image: url(' . $thumbnail . ')"></div>';
+			}
+
+			$links[] = sprintf( '<a href="%s" title="%s">%s<span>%s &raquo;</span></a>', $link, sprintf( __( 'Permalink for &laquo; %s &raquo;', 'wpmedium' ), strip_tags( $title ) ), $thumbnail, $title );
+		}
+
+		$links = '<div class="post-nav ' . $style . '"><div class="container">' . implode( '', $links ) . '</div><div style="clear:both"></div></div>';
+
+		return $links;
+	}
+
+	/**
+	 * Display custom Previous/Next Post links.
+	 * 
+	 * @since    1.5.2
+	 * 
+	 * @return   string      HTML formatted links
+	 */
+	function wpmedium_post_nav_links() {
+		echo wpmedium_get_post_nav_links();
 	}
 
 
@@ -1651,6 +1723,30 @@
 				'label'    => __( 'WPMedium Copyright Line', 'wpmedium' ),
 				'section'  => 'wpmedium_footer_section',
 				'type'     => 'text',
+			)
+		);
+
+		/* WPMedium Prev/Next Post links */
+		$wp_customize->add_setting(
+			'wpmedium_post_links',
+			array(
+				'default'   => $options['Basics']['copyright'],
+				'transport' => 'postMessage',
+			)
+		);
+
+		$wp_customize->add_control(
+			'wpmedium_post_links',
+			array(
+				'settings' => 'wpmedium_post_links',
+				'label'    => __( 'Previous/Next Post links', 'wpmedium' ),
+				'section'  => 'nav',
+				'type'    => 'select',
+				'choices'    => array(
+					'small' => __( 'Small', 'wpmedium' ),
+					'large' => __( 'Large', 'wpmedium' ),
+					'full'  => __( 'Full', 'wpmedium' )
+				),
 			)
 		);
 
