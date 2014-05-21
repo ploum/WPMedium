@@ -307,6 +307,9 @@
 		// Title Hover Color
 		if ( get_theme_mod( 'wpmedium_header_title_hover' ) != '' )
 			echo '.entry-header .entry-title a:hover {color:'.get_theme_mod( 'wpmedium_header_title_hover' ) . ' !important;} ';
+		//  Menu Background Color
+		if ( get_theme_mod( 'wpmedium_menu_background' ) != '' )
+			echo '.site-menu {background-color:'.get_theme_mod( 'wpmedium_menu_background' ) . ' !important;} ';
 		//  Footer Text Color
 		if ( get_theme_mod( 'wpmedium_footer' ) != '' )
 			echo '.site-footer {color:'.get_theme_mod( 'wpmedium_footer' ) . ' !important;} ';
@@ -1428,6 +1431,10 @@
 					'hover'       => '#45568c',
 					'label'       => __( 'Title Color', 'wpmedium' ),
 					'label_hover' => __( 'Title Hover Color', 'wpmedium' ),
+				),
+				'menu_background' => array(
+					'color'       => '#424242',
+					'label'       => __( 'Site Menu Background Color', 'wpmedium' ),
 				),
 				'link' => array(
 					'color'       => '#5765ad',

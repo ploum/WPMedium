@@ -369,8 +369,8 @@ option {
 }
 
 .site-menu a {
-    border-right: 1px solid #333;
-    border-left: 1px solid #555;
+    border-right: 1px solid rgba(0,0,0,0.3);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
     color: #ccc !important;
     display: block;
     float: left;
@@ -382,7 +382,7 @@ option {
 
 .site-menu a.active,
 .site-menu a:hover {
-    background: #666;
+    background: rgba(255, 255, 255, 0.2);
     color: #fff !important;
     text-decoration: none;
     text-shadow: 0 1px 0 #222;
@@ -398,7 +398,7 @@ option {
 }
 
 .site-menu li.selected {
-    background-color: #3B3B3B;
+    background-color: rgba(255, 255, 255, 0.4);
 }
 
 #menu-item-toggle {
