@@ -321,8 +321,8 @@
 			echo '.footer-inner .widgettitle {color:'.get_theme_mod( 'wpmedium_footer_widgettitle' ) . ';} ';
 
 		if ( wpmedium_use_local_font() ) {
-			echo "\n".'@font-face {font-family: "PT Serif";font-style: normal;font-weight: 400;src: local("PT Serif"), local("PTSerif-Regular"), url(http://themes.googleusercontent.com/static/fonts/ptserif/v5/sDRi4fY9bOiJUbgq53yZCfesZW2xOQ-xsNqO47m55DA.woff) format("woff");}';
-			echo "\n".'@font-face {font-family: "PT Sans Narrow";font-style: normal;font-weight: 400;src: local("PT Sans Narrow"), local("PTSans-Narrow"), url(http://themes.googleusercontent.com/static/fonts/ptsansnarrow/v4/UyYrYy3ltEffJV9QueSi4RdbPw3QSf9R-kE0EsQUn2A.woff) format("woff");}';
+			echo "\n".'@font-face {font-family: "PT Serif";font-style: normal;font-weight: 400;src: local("PT Serif"), local("PTSerif-Regular"), url(https://themes.googleusercontent.com/static/fonts/ptserif/v5/sDRi4fY9bOiJUbgq53yZCfesZW2xOQ-xsNqO47m55DA.woff) format("woff");}';
+			echo "\n".'@font-face {font-family: "PT Sans Narrow";font-style: normal;font-weight: 400;src: local("PT Sans Narrow"), local("PTSans-Narrow"), url(https://themes.googleusercontent.com/static/fonts/ptsansnarrow/v4/UyYrYy3ltEffJV9QueSi4RdbPw3QSf9R-kE0EsQUn2A.woff) format("woff");}';
 		}
 
 		echo '    </style>'."\n";
